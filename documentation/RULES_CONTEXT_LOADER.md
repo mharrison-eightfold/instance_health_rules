@@ -8,7 +8,53 @@
 
 This document covers the **Instance Health Rules documentation and enhancement work** - a parallel workstream focused on documenting, enhancing, and expanding the Instance Health rule set for the Eightfold platform.
 
-**This is SEPARATE from the main app development** (see `APP_CONTEXT_LOADER.md` for app work).
+**This is SEPARATE from the main app development** (see [DE_heath_report_app repository](https://github.com/mharrison-eightfold/DE_heath_report_app) for app work).
+
+---
+
+## ⚠️ **CRITICAL: CORRECT REPOSITORY**
+
+### **THIS REPOSITORY: Rules Documentation ONLY**
+
+**Repository Info:**
+- ✅ Repository: `mharrison-eightfold/instance_health_rules`
+- ✅ URL: https://github.com/mharrison-eightfold/instance_health_rules
+- ✅ Working Directory (Cloud): `/home/ec2-user/instance_health_rules`
+- ✅ Working Directory (Local Mac): `~/Developer/instance_health_rules`
+
+**What Goes Here:**
+- ✅ Rules documentation (`documentation/RULES_CONTEXT_LOADER.md`)
+- ✅ Technical reference (`documentation/INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md`)
+- ✅ AI knowledge base (`documentation/RAG_KNOWLEDGE_BASE.md`)
+- ✅ Rule data files (`documentation/*.tsv`)
+- ✅ Rule processing tools (`tools/process_new_136_rules.py`, `tools/enhance_*.py`)
+
+### **SEPARATE REPOSITORY: Implementation Health App**
+
+**App Code Goes Here:**
+- 🚀 Repository: `mharrison-eightfold/DE_heath_report_app`
+- 🚀 URL: https://github.com/mharrison-eightfold/DE_heath_report_app
+- 🚀 Working Directory (Cloud): `/home/ec2-user/de_app_1`
+- 🚀 Working Directory (Local Mac): `~/Developer/de_app_1`
+
+**What Goes There:**
+- 🚀 Backend code (`backend/` - Flask API, services)
+- 🚀 Frontend code (`frontend/` - UI, dashboards)
+- 🚀 App scripts (`scripts/` - startup scripts)
+- 🚀 App tools (`tools/` - implementation_health_report.py)
+- 🚀 App documentation (`APP_CONTEXT_LOADER.md`, setup guides)
+
+### **NEVER COMMIT:**
+- ❌ **App code to rules repo** (use DE_heath_report_app repo instead)
+- ❌ **Rules docs to app repo** (use instance_health_rules repo instead)
+- ❌ To EightfoldAI/vscode or any main Eightfold repositories
+
+**Before ANY git operation, verify:**
+```bash
+git remote -v
+# For rules work: mharrison-eightfold/instance_health_rules
+# For app work: mharrison-eightfold/DE_heath_report_app
+```
 
 ---
 
@@ -137,10 +183,9 @@ bcce091 - docs: create comprehensive technical reference and enhance rule descri
 ## 📂 **File Structure**
 
 ```
-de_app_1/
+instance_health_rules/                                  # ← THIS REPOSITORY
 ├── documentation/
-│   ├── APP_CONTEXT_LOADER.md                           # ← App development context (main app)
-│   ├── RULES_CONTEXT_LOADER.md                         # ← THIS FILE (rules documentation)
+│   ├── RULES_CONTEXT_LOADER.md                         # ← THIS FILE (start here!)
 │   │
 │   ├── INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md    # ← 3,971 lines - Comprehensive tech reference
 │   ├── RAG_KNOWLEDGE_BASE.md                           # ← 415 lines - AI domain knowledge
@@ -151,12 +196,25 @@ de_app_1/
 │   ├── PCS_TM_TA_rules_with_cursor_descriptions.tsv    # ← 165 original rules (enhanced)
 │   └── instance_health_rules_input.tsv                 # ← Original rule input
 │
-└── tools/
-    ├── process_new_136_rules.py                        # ← Process 136 new rules
-    ├── enhance_all_rule_descriptions.py                # ← Enhance all descriptions
-    ├── enhance_rule_descriptions.py                    # ← Enhance specific descriptions
-    ├── generate_cursor_descriptions.py                 # ← Generate AI descriptions
-    └── apply_rule_refinements.py                       # ← Apply refinements
+├── tools/
+│   ├── process_new_136_rules.py                        # ← Process 136 new rules
+│   ├── enhance_all_rule_descriptions.py                # ← Enhance all descriptions
+│   ├── enhance_rule_descriptions.py                    # ← Enhance specific descriptions
+│   ├── generate_cursor_descriptions.py                 # ← Generate AI descriptions
+│   └── apply_rule_refinements.py                       # ← Apply refinements
+│
+└── README.md                                            # ← Repository overview
+```
+
+**Separate Repository (App Code):**
+```
+DE_heath_report_app/                                    # ← App development repository
+├── backend/                                            # ← Flask API
+├── frontend/                                           # ← Web UI
+├── scripts/                                            # ← Startup scripts
+├── tools/                                              # ← App tools (NOT rules tools)
+└── documentation/
+    └── APP_CONTEXT_LOADER.md                           # ← App context loader
 ```
 
 ---
@@ -365,8 +423,9 @@ Integrations are the data pipeline. If ATS/HRIS sync breaks or lags, the platfor
 
 When working on rules documentation:
 
+- [ ] **FIRST: Verify correct repository!** Run `git remote -v` - must show `mharrison-eightfold/instance_health_rules`
 - [ ] Read this file (`RULES_CONTEXT_LOADER.md`)
-- [ ] Understand: This is **separate from app development** (see `APP_CONTEXT_LOADER.md`)
+- [ ] Understand: This is **separate from app development** (app code goes to DE_heath_report_app repository)
 - [ ] Understand: 165 original rules + 136 new rules = 301 total documented rules
 - [ ] Know the rule categories: Config Health, Data Health, Operational Health
 - [ ] Know the 6 checkpoints and their purposes
@@ -420,8 +479,8 @@ When working on rules documentation:
 
 **You're ready to work on rules documentation! 🚀**
 
-For app development work, see: `APP_CONTEXT_LOADER.md`
+For app development work, see: **[DE_heath_report_app repository](https://github.com/mharrison-eightfold/DE_heath_report_app)**
 
-For running the app, see: `LOCAL_SETUP_GUIDE.md`
+For running the app, see: [LOCAL_SETUP_GUIDE.md](https://github.com/mharrison-eightfold/DE_heath_report_app/blob/main/documentation/LOCAL_SETUP_GUIDE.md) in app repo
 
-For design rules, see: `EIGHTFOLD_BRANDING_GUIDELINES.md`
+For design rules, see: [EIGHTFOLD_BRANDING_GUIDELINES.md](https://github.com/mharrison-eightfold/DE_heath_report_app/blob/main/documentation/EIGHTFOLD_BRANDING_GUIDELINES.md) in app repo
