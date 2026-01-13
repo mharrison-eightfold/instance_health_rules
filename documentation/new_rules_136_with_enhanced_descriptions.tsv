@@ -1,0 +1,819 @@
+SKU	Product Area	Rule Name	Rule ID	Config Reference	Original Description	Cursor Generated Description	Code Reference	Current Feature ID	Current Feature Name	Action	New Feature Alignment	Updates to rule logic
+Talent Intelligence Platform	AI	More than {{ metric_data_json.min_threshold }}% internal positions must be calibrated	internal_positions_calibrated_rule	Position calibration / calibration_config	Ensure that all open positions are calibrated to allow candidates/employees to receive relevant job recommendations <br><br><h5> Impact of failure</h5>. Missing calbiration may lead to job recommendations that are not aligned with an candidate / employee's experience and background reducing relevance and quality of Matches	"**Purpose:** Ensure that all open positions are calibrated to allow candidates/employees to receive relevant job recommendations   . Missing calbiration may lead to job recommendations that are not aligned with an candidate / employee's experience and background reducing relevance and quality of Matches
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Navigate to each open position and complete the calibration process by adding ideal candidates and adjusting skill requirements."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	internal_mobility_recommendations	Internal Mobility Recommendations	Update	Internal Mobility Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% internal positions must have a location	internal_positions_with_location_rule	Position Sync (ATS) → position.location	Ensure that all open positions have a location assigned to allow employees to receive relevant job recommendations based on geographic preferences. <br><br><h5> Impact of failure</h5>. Missing location data may lead to job recommendations that are not aligned with an employee's preferred or eligible locations, reducing relevance and quality of Matches	"**Purpose:** Ensure that all open positions have a location assigned to allow employees to receive relevant job recommendations based on geographic preferences.   . Missing location data may lead to job recommendations that are not aligned with an employee's preferred or eligible locations, reducing relevance and quality of Matches
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure positions have location data in the ATS. Check Position Sync mappings and verify location field is correctly mapped."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	internal_mobility_recommendations	Internal Mobility Recommendations	Update	Internal Mobility Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% internal positions must have skills	internal_positions_with_skills_rule	Position calibration → skills / AI inference	Ensure that positions have at least one skill assigned to support relevant job recommendations based on employee skill sets. <br><br><h5> Impact of failure</h5>. Without any skills assigned, the system cannot accurately match employees to roles, resulting in low-quality or irrelevant recommendations.	"**Purpose:** Ensure that positions have at least one skill assigned to support relevant job recommendations based on employee skill sets.   . Without any skills assigned, the system cannot accurately match employees to roles, resulting in low-quality or irrelevant recommendations.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Calibrate positions by adding skills manually or enable AI skill inference. Verify calibration_config settings."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	internal_mobility_recommendations	Internal Mobility Recommendations	Update	Internal Mobility Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% internal positions must have more than 3 skills	internal_positions_with_multiple_skills_rule	Position calibration → skills (minimum 3 required)	Ensure that all open positions have atleast 3 skills assigned to enable more precise and high-quality job recommendations. <br><br><h5> Impact of failure</h5>. Inadequate skill tagging can reduce the accuracy of recommendations and hinder the system's ability to distinguish between relevant and irrelevant  matches.	"**Purpose:** Ensure that all open positions have atleast 3 skills assigned to enable more precise and high-quality job recommendations.   . Inadequate skill tagging can reduce the accuracy of recommendations and hinder the system's ability to distinguish between relevant and irrelevant  matches.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review position calibration to ensure at least 3 skills are assigned to each position for accurate matching."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	internal_mobility_recommendations	Internal Mobility Recommendations	Update	Internal Mobility Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% internal positions must have job bands that are defined in internal job posting (IJP) config	internal_positions_with_job_band_rule	ijp_config → job_bands / position.hiring_band	Ensure that positions have a job band assigned to enable relevant job recommendations based on seniority alignment. <br><br><h5> Impact of failure</h5>. Missing job band data can result in mismatches between job seniority and employee experience, reducing recommendation effectiveness.	"**Purpose:** Ensure that positions have a job band assigned to enable relevant job recommendations based on seniority alignment.   . Missing job band data can result in mismatches between job seniority and employee experience, reducing recommendation effectiveness.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure job bands in ijp_config and ensure positions have hiring_band populated in the ATS integration."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	internal_mobility_recommendations	Internal Mobility Recommendations	Keep as is	Internal Mobility Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% claimed employee profiles must have level defined in ijp_config	claimed_employee_profiles_with_levels	Employee Sync (HRIS) → employee.level	Ensure that employee profiles have a job level assigned to enable job recommendations aligned with the employee's seniority. <br><br><h5> Impact of failure</h5>. Recommendations may be too junior or senior for the employee's current position, reducing their usefulness and relevance. Additionally missing job level information prevents the system from aligning employees with mentors at the appropriate seniority level, leading to mismatches and reduced mentoring impact.	"**Purpose:** Ensure that employee profiles have a job level assigned to enable job recommendations aligned with the employee's seniority.   . Recommendations may be too junior or senior for the employee's current position, reducing their usefulness and relevance. Additionally missing job level information prevents the system from aligning employees with mentors at the appropriate seniority level, leading to mismatches and reduced mentoring impact.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Verify employee level data is synced from HRIS. Configure level mappings in ijp_config → job_bands."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	internal_mobility_recommendations	Internal Mobility Recommendations	Update	Internal Mobility Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% claimed employee profiles must have skills	claimed_employee_profiles_with_skills	Employee profile → skills	Ensure that employee profiles include skills to support relevant job/course recommendations based on capabilities and expertise. <br><br><h5> Impact of failure</h5>. Absence of skill data can lead to generic or irrelevant recommendations that don't reflect the employee's abilities.	"**Purpose:** Ensure that employee profiles include skills to support relevant job/course recommendations based on capabilities and expertise.   . Absence of skill data can lead to generic or irrelevant recommendations that don't reflect the employee's abilities.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Encourage employees to add skills via Profile Assistant. Enable skill inference from job titles."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	internal_mobility_recommendations	Internal Mobility Recommendations	Update	Internal Mobility Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% projects must have more than 3 skills	projects_with_multiple_skills_rule	Project definition → skills	Ensure that projects have atleast 3 relevant skills assigned to enable accurate and high-quality employee matches. <br><br><h5> Impact of failure</h5>. Limited skill data on projects can reduce matching precision, leading to inefficient resource allocation.	"**Purpose:** Ensure that projects have atleast 3 relevant skills assigned to enable accurate and high-quality employee matches.   . Limited skill data on projects can reduce matching precision, leading to inefficient resource allocation.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Add at least 3 skills to each project definition to improve matching accuracy."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	project_lead_recommendations	Project Lead Recommendations	Update	Project Lead Recommendations	specific about the number of skills
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% projects must have ideal candidates	projects_with_ideal_candidates_rule	Project calibration → ideal_candidates	Ensure that projects have at least three ideal candidate assigned to improve the quality of employee matching. <br><br><h5> Impact of failure</h5>. Without an ideal candidate reference, matching may not reflect actual expectations for the role.	"**Purpose:** Ensure that projects have at least three ideal candidate assigned to improve the quality of employee matching.   . Without an ideal candidate reference, matching may not reflect actual expectations for the role.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Calibrate projects by adding at least 3 ideal candidates to guide employee recommendations."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	project_lead_recommendations	Project Lead Recommendations	Update	Project Lead Recommendations	logic update: Instead of one ideal candidate make it three
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% projects must have location	projects_with_location_rule	Project definition → location	Ensure that projects have a location assigned to support relevant employee matches based on geography. <br><br><h5> Impact of failure</h5>. Employees may be recommended for projects in unsuitable locations, impacting assignment success.	"**Purpose:** Ensure that projects have a location assigned to support relevant employee matches based on geography.   . Employees may be recommended for projects in unsuitable locations, impacting assignment success.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure all projects have a location assigned in the project definition."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	project_lead_recommendations	Project Lead Recommendations	Keep as is	Project Lead Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% projects must have more than 3 skills	projects_with_multiple_skills_rule	Project definition → skills	Ensure that projects have more than three skills assigned to support high-quality and precise employee matching. <br><br><h5> Impact of failure</h5>Projects with too few skills may lead to inaccurate or generic matches, lowering project success and efficiency.	"**Purpose:** Ensure that projects have more than three skills assigned to support high-quality and precise employee matching.   Projects with too few skills may lead to inaccurate or generic matches, lowering project success and efficiency.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Add at least 3 skills to each project definition to improve matching accuracy."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	project_recommendations	Project Recommendations	Keep as is	Project Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% projects must have ideal candidates	projects_with_ideal_candidates_rule	Project calibration → ideal_candidates	Ensure that each project has at least three candidate assigned to guide high-quality employee recommendations. <br><br><h5> Impact of failure</h5>Without an ideal candidate reference, the system lacks a benchmark for fit, resulting in mismatches and reduced match confidence	"**Purpose:** Ensure that each project has at least three candidate assigned to guide high-quality employee recommendations.   Without an ideal candidate reference, the system lacks a benchmark for fit, resulting in mismatches and reduced match confidence
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Calibrate projects by adding at least 3 ideal candidates to guide employee recommendations."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	project_recommendations	Project Recommendations	Update	Project Recommendations	logic update: Instead of one ideal candidate make it three
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% projects must have location	projects_with_location_rule	Project definition → location	Ensure that each project has a location assigned to support relevant employee recommendations based on geography. <br><br><h5> Impact of failure</h5>Employee-project matches may ignore geographic constraints, leading to impractical or undesirable recommendations.	"**Purpose:** Ensure that each project has a location assigned to support relevant employee recommendations based on geography.   Employee-project matches may ignore geographic constraints, leading to impractical or undesirable recommendations.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure all projects have a location assigned in the project definition."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	project_recommendations	Project Recommendations	Keep as is	Project Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% of courses should have skills	courses_with_skills_rule	Course Sync (LMS) → course.skills	Ensure courses have skills present to support accurate course-to-skill matching. <br><br><h5> Impact of failure</h5>. Courses without skill tags can't be effectively matched to employee development needs, reducing recommendation quality.	"**Purpose:** Ensure courses have skills present to support accurate course-to-skill matching.   . Courses without skill tags can't be effectively matched to employee development needs, reducing recommendation quality.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map skills to courses during LMS sync or manually add skills to course records."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	course_recommendations	Course Recommendations	Keep as is	Course Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% of courses should have relevant (50+ words) description	courses_with_description_rule	Course Sync (LMS) → course.description	Ensure courses have adequate descriptions (minimum 50 words) to make the reccomendation appropriate. <br><br><h5> Impact of failure</h5>. Lack of context about the course due to Incomplete descriptions  or no descriptions decrease the quality of course recommendation	"**Purpose:** Ensure courses have adequate descriptions (minimum 50 words) to make the reccomendation appropriate.   . Lack of context about the course due to Incomplete descriptions  or no descriptions decrease the quality of course recommendation
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure courses have descriptions of at least 50 words in the LMS for accurate recommendations."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	course_recommendations	Course Recommendations	Keep as is	Course Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% of roles should have their associated levels defined in Internal mobility config	role_levels_in_internal_mobility_config_quality	ijp_config → career_navigator_seniority_ordering / job_bands	Define levels in internal mobility configuration to establish a clear role hierarchy across the organization. <br><br><h5> Impact of failure</h5>. Without defined levels, the system cannot accurately interpret progression paths or seniority alignment, leading to invalid career path recommendations	"**Purpose:** Define levels in internal mobility configuration to establish a clear role hierarchy across the organization.   . Without defined levels, the system cannot accurately interpret progression paths or seniority alignment, leading to invalid career path recommendations
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure career_navigator_seniority_ordering in ijp_config with all role levels."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	career_navigator_recommendations	Career Navigator Recommendations	Keep as is	Career Navigator Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% of roles should have job code	role_job_code_quality	role_library_config → roles.job_code / Role Sync (HRIS)	Job codes act as unique identifiers to determine distinct roles and associate employees accurately with them. <br><br><h5> Impact of failure</h5>. Missing or inconsistent job codes lead to incorrect role mappings and  invalid career path recommendations	"**Purpose:** Job codes act as unique identifiers to determine distinct roles and associate employees accurately with them.   . Missing or inconsistent job codes lead to incorrect role mappings and  invalid career path recommendations
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure job codes are synced from HRIS and mapped correctly in role_library_config."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	career_navigator_recommendations	Career Navigator Recommendations	Keep as is	Career Navigator Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% of roles should have business function	role_lob_quality	role_library_config → roles.business_function / Role Sync (HRIS)	Assign business functions to roles to infer domain and improve recommendation relevance in Career Navigator. <br><br><h5> Impact of failure</h5>. Without business function context, the system may misunderstand role intent, affecting domain-specific guidance.	"**Purpose:** Assign business functions to roles to infer domain and improve recommendation relevance in Career Navigator.   . Without business function context, the system may misunderstand role intent, affecting domain-specific guidance.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map business functions to roles in role_library_config or sync from HRIS."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	career_navigator_recommendations	Career Navigator Recommendations	Keep as is	Career Navigator Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% of roles should have at least 3 skills	role_skills_quality	role_library_config → roles.skills (minimum 3 required)	Skills and benchmarks help define role requirements and power recommendations in key TM modules like Career Navigator. <br><br><h5> Impact of failure</h5>. Poorly defined role requirements hinder accurate skill gap identification and reduce the value of personalized suggestions.	"**Purpose:** Skills and benchmarks help define role requirements and power recommendations in key TM modules like Career Navigator.   . Poorly defined role requirements hinder accurate skill gap identification and reduce the value of personalized suggestions.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Add at least 3 skills to each role in role_library_config for accurate skill gap analysis."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	career_navigator_recommendations	Career Navigator Recommendations	Keep as is	Career Navigator Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}%  of claimed employee profiles should have marked as open to mentorship	claimed_employee_profiles_open_to_mentor	career_hub_base_config → mentorship.enabled / Employee profile settings	Ensure a sufficient number of mentors are available to support relevant mentor recommendations for employees. <br><br><h5> Impact of failure</h5>. Too few mentors can limit access and degrade the quality of mentorship matching.	"**Purpose:** Ensure a sufficient number of mentors are available to support relevant mentor recommendations for employees.   . Too few mentors can limit access and degrade the quality of mentorship matching.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Enable mentorship in career_hub_base_config and encourage employees to opt-in as mentors."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	mentor_recommendations	Mentor Recommendations	Keep as is	Mentor Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% mentor profiles must have rich data	mentor_profiles_with_rich_data	Employee profile → skills, experience, topics / mentorship settings	Ensure mentor profiles have rich data to allow the system to make high-quality mentor recommendations. <br><br><h5> Impact of failure</h5>. Incomplete mentor profiles reduce relevance and engagement in mentorship programs.	"**Purpose:** Ensure mentor profiles have rich data to allow the system to make high-quality mentor recommendations.   . Incomplete mentor profiles reduce relevance and engagement in mentorship programs.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Encourage mentors to complete their profiles with skills, experience, and mentorship topics."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	mentor_recommendations	Mentor Recommendations	Keep as is	Mentor Recommendations	
+Talent Management Core	AI	More than {{ metric_data_json.min_threshold }}% claimed employee profiles must have skills	claimed_employee_profiles_with_skills	Employee profile → skills	Ensure that claimed employee profiles have skills assigned to enable employees to receive relevant mentor recommendations based on their learning and growth needs. <br><br><h5> Impact of failure</h5>Without skills in employee profiles, the system cannot recommend mentors with the right expertise, reducing the effectiveness and relevance of mentor-mentee matches.	"**Purpose:** Ensure that claimed employee profiles have skills assigned to enable employees to receive relevant mentor recommendations based on their learning and growth needs.   Without skills in employee profiles, the system cannot recommend mentors with the right expertise, reducing the effectiveness and relevance of mentor-mentee matches.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Encourage employees to add skills via Profile Assistant. Enable skill inference from job titles."	www/data_audit/platform_health/data_health/product_data_health_evaluation_rules.py	mentor_recommendations	Mentor Recommendations	Keep as is	Mentor Recommendations	
+	Security	Do not Publish jobs posted on the sandbox PCS Site to Google/Search Engines	is_pcs_seo_optimization_for_sandbox_true	pcsx_base_config → seo_config.enabled (sandbox should be false)	Ensure we prevent candidates from arriving at the sandbox site rather than the production site	"**Purpose:** Ensure we prevent candidates from arriving at the sandbox site rather than the production site
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Disable SEO optimization for sandbox environments in pcsx_base_config → seo_config.enabled = false."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py		Security	New/Add		
+	Security	Number of external domains allowed for this instance	num_external_domains	external_account_for_group_id config (max 20 domains)	This rule checks the external_account_for_group_id config to ensure that the number of external domains for this instance is no more than 20	"**Purpose:** This rule checks the external_account_for_group_id config to ensure that the number of external domains for this instance is no more than 20
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review and reduce external domains in external_account_for_group_id config to 20 or fewer."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py		Security	Keep as is		
+	Security	Campaign rate limit	max_campaign_limit	campaign_config → max_per_campaign (max 2000)	This rule checks that the maximum campaign limit is set to under 2000. This is set in campaign_config under the key 'max_per_campaign' -> group_id	"**Purpose:** This rule checks that the maximum campaign limit is set to under 2000. This is set in campaign_config under the key 'max_per_campaign' -> group_id
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Set max_per_campaign in campaign_config to 2000 or less."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py		Security	Keep as is		
+	Security	Email loopback should be disabled for prod instance	email_loopback_prod	email_loopback_gate (should be disabled for prod)	This rule checks to ensure that email_loopback_gate is disabled for this instance (prod)	"**Purpose:** This rule checks to ensure that email_loopback_gate is disabled for this instance (prod)
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure email_loopback_gate: enable for sandbox, disable for production environments."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py		Security	Keep as is		
+	Security	Email loopback should be enabled for sandbox instance	email_loopback_non_prod	email_loopback_gate (should be enabled for sandbox)	This rule checks to ensure that email_loopback_gate is enabled for this instance (non-prod)	"**Purpose:** This rule checks to ensure that email_loopback_gate is enabled for this instance (non-prod)
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure email_loopback_gate: enable for sandbox, disable for production environments."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py		Security	Keep as is		
+	Security	Account provisioning should be based on Employee Sync.	provision_user_accounts_prod	user_provisioning_config → provision_from_employee_sync	This determines which accounts should have accounts provisioned. Only employees whose data has been synced to Eightfold will have accounts created	"**Purpose:** This determines which accounts should have accounts provisioned. Only employees whose data has been synced to Eightfold will have accounts created
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Enable user_provisioning_config to provision accounts only from Employee Sync data."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py		Security	New/Add		
+	Security	Session timeout	custom_session_timeout_config	custom_session_timeout_config (max 24 hours)	This determines if the session timeout is less than 24 hours	"**Purpose:** This determines if the session timeout is less than 24 hours
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Set custom_session_timeout_config to 24 hours or less for security compliance."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py		Security	Keep as is		
+	Security	Profile visibility	employee_profile_visibility	career_hub_base_config → profile_visibility / unclaimed_employee_visibility	Check if unclaimed employee profiles can be viewed by other employees and recruiters.	"**Purpose:** Check if unclaimed employee profiles can be viewed by other employees and recruiters.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review profile_visibility settings in career_hub_base_config for unclaimed employee profiles."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py		Security	Keep as is		
+	Security	Too many Candidate Sync Failures	candidate_sync_failure_rule	ats_config → sync settings / sync error monitoring	This rule evaluates the health of candidate syncs by tracking the number of sync failures.	"**Purpose:** This rule evaluates the health of candidate syncs by tracking the number of sync failures.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Investigate sync errors in Integration Console. Check API credentials and field mappings."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Keep as is		
+	Security	Too many Position Sync Failures	position_sync_failure_rule	ats_config → sync settings / sync error monitoring	This rule evaluates the health of position syncs by tracking the number of sync failures.	"**Purpose:** This rule evaluates the health of position syncs by tracking the number of sync failures.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Investigate sync errors in Integration Console. Check API credentials and field mappings."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Keep as is		
+	Security	Too many Employee Sync Failures	employee_sync_failure_rule	ats_config → sync settings / sync error monitoring	"The rule ""Too many Employee Sync Failures"" activates when the total count of failed synchronizations in a single day exceeds the average failed synchronizations over the last seven days by more than one standard deviation. This method uses statistical analysis to pinpoint unusual activity."	"**Purpose:** The rule Too many Employee Sync Failures activates when the total count of failed synchronizations in a single day exceeds the average failed synchronizations over the last seven days by more than one standard deviation. This method uses statistical analysis to pinpoint unusual activity.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Investigate sync errors in Integration Console. Check API credentials and field mappings."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Update		
+	Security	Too many Rejections in the platform	num_rejections_rule	Operational metrics → rejection tracking / statistical analysis	This rule warns if the number of rejections in a single day is unusually high compared to the average over the last seven days, using statistical analysis to detect spikes. This helps identify anomalies that might need investigation.	"**Purpose:** This rule warns if the number of rejections in a single day is unusually high compared to the average over the last seven days, using statistical analysis to detect spikes. This helps identify anomalies that might need investigation.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review recent rejection activity for anomalies. Check workflow automation rules."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Update		
+	Security	Too many Application Failures	application_failures_rule	Operational metrics → application error tracking	This rule fails if the total number of application failures in a single day is more than one standard deviation above the average number of failures from the past seven days. This means we use statistics to find unusually high numbers of failures.	"**Purpose:** This rule fails if the total number of application failures in a single day is more than one standard deviation above the average number of failures from the past seven days. This means we use statistics to find unusually high numbers of failures.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Investigate application submission errors. Check ATS connectivity and field validation."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Update		
+	Security	Too many profiles subject to data retention rules	profile_data_retention_rule	data_retention_config → talent pool rules (max 10%)	This rule identifies when the percentage of profiles flagged for data retention exceeds 10% of the total talent pool. This is calculated by dividing the number of profiles subject to data retention by the total talent pool size. The business logic behind this is that once profiles are purged, proactive checks may not be accurate as any activity on those profiles will reset the counter and prevent their deletion.	"**Purpose:** This rule identifies when the percentage of profiles flagged for data retention exceeds 10% of the total talent pool. This is calculated by dividing the number of profiles subject to data retention by the total talent pool size. The business logic behind this is that once profiles are purged, proactive checks may not be accurate as any activity on those profiles will reset the counter and prevent their deletion.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review data_retention_config rules and ensure proper purge schedules are configured."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Update		
+	Security	Too many unsubscribe requests	unsubscribe_requests_volume_rule	email_config → unsubscribe tracking	"This rule checks for a high number of unsubscribe requests. We need to clarify what ""high"" means and if we should also look at why people are unsubscribing, as well as whether the requests are from real people or bots. Also, we need to decide if this rule is still necessary, as unsubscribe requests are often a personal choice and may not impact product security."	"**Purpose:** This rule checks for a high number of unsubscribe requests. We need to clarify what high means and if we should also look at why people are unsubscribing, as well as whether the requests are from real people or bots. Also, we need to decide if this rule is still necessary, as unsubscribe requests are often a personal choice and may not impact product security.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review unsubscribe volume and ensure email content meets compliance standards."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Update		
+	Security	Emails sent to employees	emails_sent_to_employees	email_config → employee email frequency limits	"This rule needs to be functional. For example, an employee shouldn't receive more than two non-time-sensitive ""Skills Update"" emails per month. However, this rule should not apply to time-sensitive ""Skills Assessment (Self)"" requests. This rule is registered as 'emails_sent_to_employees'."	"**Purpose:** This rule needs to be functional. For example, an employee shouldn't receive more than two non-time-sensitive Skills Update emails per month. However, this rule should not apply to time-sensitive Skills Assessment (Self) requests. This rule is registered as 'emails_sent_to_employees'.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure email frequency limits in email_config to prevent over-messaging."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Update		
+	Security	Overall email volume	num_emails_rule	email_config → email volume monitoring	This rule is for production instances to prevent too many admin accounts. This is important for: 1. Making sure customers can do transactions reliably. 2. Having proper audits for production. 3. Clearly defining who is responsible for what.	"**Purpose:** This rule is for production instances to prevent too many admin accounts. This is important for: 1. Making sure customers can do transactions reliably. 2. Having proper audits for production. 3. Clearly defining who is responsible for what.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Monitor email volume and ensure campaign limits are properly configured."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Update		
+	Security	Admin accounts	num_admin_accounts_rule	Admin Console → Manage Users → admin role count	Check if there are too many admin accounts set up in the instance	"**Purpose:** Check if there are too many admin accounts set up in the instance
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review admin accounts in Admin Console → Manage Users. Remove unnecessary admin access."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Keep as is		
+	Security	Data subject requests	data_subject_requests	data_retention_config → GDPR/CCPA request tracking	Check if there are too many data subject requests set up in the instance	"**Purpose:** Check if there are too many data subject requests set up in the instance
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Process pending data subject requests and ensure GDPR/CCPA compliance workflows are active."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py		Security	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have level	employee_level_quality	Employee Sync (HRIS) → profile.data_json.employee.level	Employee levels are essential for determining employee seniority and for automatically initializing role seniority. This rule ensures that employee level field is not blank	"**Purpose:** Employee levels are essential for determining employee seniority and for automatically initializing role seniority. This rule ensures that employee level field is not blank
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure employee level field is mapped in HRIS integration. Check Employee Sync field mappings."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have location country	employee_location_country_quality	Employee Sync (HRIS) → profile.data_json.employee.location_country	This rule ensures that country field is not blank since it is used in analytics dashboards for generating insights and for filtering	"**Purpose:** This rule ensures that country field is not blank since it is used in analytics dashboards for generating insights and for filtering
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map location_country field in HRIS integration. Verify country data is available."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have email	employee_email_quality	Employee Sync (HRIS) → profile.data_json.employee.email	This rule ensures that email field is not blank for the employees since this field is used as a primary key in some of our datasets	"**Purpose:** This rule ensures that email field is not blank for the employees since this field is used as a primary key in some of our datasets
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure employee email field is correctly mapped and populated in HRIS sync."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Update		
+	Analytics	Discrepancy between count of employees that are alumni and employees with a termination_date must be less than {{ metric_data_json.discrepancy_threshold }}%	employee_is_alumni_and_termination_date_discrepancy_quality	Employee Sync (HRIS) → employee.is_alumni / employee.termination_date	This rule ensures that all employees who have left the organisation have a termination date present	"**Purpose:** This rule ensures that all employees who have left the organisation have a termination date present
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Verify termination_date is populated for all alumni employees in HRIS."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have first name	employee_first_name_quality	Employee Sync (HRIS) → profile.data_json.employee.first_name	This rule ensures that first name must be present for employees	"**Purpose:** This rule ensures that first name must be present for employees
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure first_name field is mapped and populated in HRIS integration."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have last name	employee_last_name_quality	Employee Sync (HRIS) → profile.data_json.employee.last_name	This rule ensures that last name must be present for employees	"**Purpose:** This rule ensures that last name must be present for employees
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure last_name field is mapped and populated in HRIS integration."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have hiring_date	employee_hiring_date_quality	Employee Sync (HRIS) → profile.data_json.employee.hire_date	This rule ensures that hiring date field is not blank for employees since it is important for analytics dashboard data accuracy	"**Purpose:** This rule ensures that hiring date field is not blank for employees since it is important for analytics dashboard data accuracy
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map hire_date field in HRIS integration for accurate analytics."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have location	employee_location_quality	Employee Sync (HRIS) → profile.data_json.employee.location	This rule ensures that location field is not blank for most of the employees	"**Purpose:** This rule ensures that location field is not blank for most of the employees
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure location field is mapped in HRIS integration."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have manager_id	employee_manager_id_quality	Employee Sync (HRIS) → profile.data_json.employee.manager_id	This rule ensures that manager's user id field is not blank. The manager_userid field is important for the org chart product to work, as the org chart can only be generated if manager ids	"**Purpose:** This rule ensures that manager's user id field is not blank. The manager_userid field is important for the org chart product to work, as the org chart can only be generated if manager ids
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map manager_id field in HRIS integration. Required for org chart functionality."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have manager email	employee_manager_email_quality	Employee Sync (HRIS) → profile.data_json.employee.manager_email	This rule ensures that manager's email field is not blank for employees since this field is used as a filter in some of our datasets	"**Purpose:** This rule ensures that manager's email field is not blank for employees since this field is used as a filter in some of our datasets
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map manager_email field in HRIS integration for reporting and notifications."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have lob (Line of Business)	employee_division_quality	Employee Sync (HRIS) → profile.data_json.employee.division	This rule ensures that the divsiion field is not blank. Division (line of business) is important to understand employee's role and for role auto initialisation to infer role business function	"**Purpose:** This rule ensures that the divsiion field is not blank. Division (line of business) is important to understand employee's role and for role auto initialisation to infer role business function
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map division/LOB field in HRIS integration for business unit analytics."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of employees should have internal candidate profile	employee_internal_candidate_id_quality	Employee Sync (HRIS) → employee.internal_candidate_id linkage	This rule requires that more than a specified percentage of employees (above a set minimum threshold) have an internal candidate profile within the system, ensuring a strong link between each employee record and an internal candidate profile used for talent management activities.	"**Purpose:** This rule requires that more than a specified percentage of employees (above a set minimum threshold) have an internal candidate profile within the system, ensuring a strong link between each employee record and an internal candidate profile used for talent management activities.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure employee records are linked to internal candidate profiles during sync."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	tm_dashboards	TM Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of profiles should have first_name	profile_first_name_quality	Candidate Sync (ATS) → profile.first_name	This rule ensures that first name must be present for candidates to accurately display names on dashboards and throughout our system	"**Purpose:** This rule ensures that first name must be present for candidates to accurately display names on dashboards and throughout our system
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review the configuration settings for this rule in Admin Console or Integration Console."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of profiles should have last_name	profile_last_name_quality	Candidate Sync (ATS) → profile.last_name	This rule ensures that last name must be present for candidates to accurately display names on dashboards and throughout our system	"**Purpose:** This rule ensures that last name must be present for candidates to accurately display names on dashboards and throughout our system
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review the configuration settings for this rule in Admin Console or Integration Console."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	Funnel Metric - There must be more applications in 'new_applicant' stagegroup than 'phonescreen' stagegroup	application_funnel_more_new_applicants_than_phonescreen	ats_config → stage_map / diversity_dashboard_config → application_stage_map	This metric ensures that the count of applications in 'new_applicant' stagegroup is more than application in 'phonescreen' stagegroup so that the funnel integrity is maintained	"**Purpose:** This metric ensures that the count of applications in 'new_applicant' stagegroup is more than application in 'phonescreen' stagegroup so that the funnel integrity is maintained
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review stage mappings in ats_config → stage_map. Ensure funnel progression is logical."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	Funnel Metric - There must be more applications in 'phonescreen' stagegroup than 'onsite' stagegroup	application_funnel_more_phonescreen_than_onsite	ats_config → stage_map / diversity_dashboard_config → application_stage_map	This metric ensures that the count of applications in 'phonescreen' stagegroup is more than application in 'onsite' stagegroup so that the funnel integrity is maintained	"**Purpose:** This metric ensures that the count of applications in 'phonescreen' stagegroup is more than application in 'onsite' stagegroup so that the funnel integrity is maintained
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review stage mappings in ats_config → stage_map. Ensure funnel progression is logical."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	Funnel Metric - There must be more applications in 'onsite' stagegroup than 'offer' stagegroup	application_funnel_more_onsite_than_offer	ats_config → stage_map / diversity_dashboard_config → application_stage_map	This metric ensures that the count of applications in 'onsite' stagegroup is more than application in 'offer' stagegroup so that the funnel integrity is maintained	"**Purpose:** This metric ensures that the count of applications in 'onsite' stagegroup is more than application in 'offer' stagegroup so that the funnel integrity is maintained
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review stage mappings in ats_config → stage_map. Ensure funnel progression is logical."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	Funnel Metric - There must be more applications in 'offer' stagegroup than 'hired' stagegroup	application_funnel_more_offer_than_hired	ats_config → stage_map / diversity_dashboard_config → application_stage_map	This metric ensures that the count of applications in 'offer' stagegroup is more than application in 'hired' stagegroup so that the funnel integrity is maintained	"**Purpose:** This metric ensures that the count of applications in 'offer' stagegroup is more than application in 'hired' stagegroup so that the funnel integrity is maintained
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review stage mappings in ats_config → stage_map. Ensure funnel progression is logical."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of applications should have source_type	application_source_type_quality	Candidate Sync (ATS) → application.source_type	This metric ensures that applications must have source_type. This is critical to identify where the application was created from.	"**Purpose:** This metric ensures that applications must have source_type. This is critical to identify where the application was created from.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map source_type field in ATS integration for accurate source tracking."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of applications must be in offer stage group	application_offer_stage_group_quality	ats_config → stage_map → offer stage group	This metric ensures that some applications must be present in offer stage group. In case this metric fails, please check the stages the applications are in, and make sure there are stages in the stagemap mapped to 'offer' stage	"**Purpose:** This metric ensures that some applications must be present in offer stage group. In case this metric fails, please check the stages the applications are in, and make sure there are stages in the stagemap mapped to 'offer' stage
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure stage mappings in ats_config → stage_map or diversity_dashboard_config → application_stage_map."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of applications must be in phonescreen stage group	phonescreen_stage_group_quality	ats_config → stage_map → phonescreen stage group	This metric ensures that some applications must be present in phonescreen stage group. In case this metric fails, please check the stages the applications are in, and make sure there are stages in the stagemap mapped to 'phonescreen' stage	"**Purpose:** This metric ensures that some applications must be present in phonescreen stage group. In case this metric fails, please check the stages the applications are in, and make sure there are stages in the stagemap mapped to 'phonescreen' stage
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure stage mappings in ats_config → stage_map or diversity_dashboard_config → application_stage_map."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Delete		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of applications must be in new_applicant stage group	application_new_applicant_stage_group_quality	ats_config → stage_map → new_applicant stage group	This metric ensures that some applications must be present in new applicant stage group. In case this metric fails, please check the stages the applications are in, and make sure there are stages in the stagemap mapped to 'new applicant' stage	"**Purpose:** This metric ensures that some applications must be present in new applicant stage group. In case this metric fails, please check the stages the applications are in, and make sure there are stages in the stagemap mapped to 'new applicant' stage
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure stage mappings in ats_config → stage_map or diversity_dashboard_config → application_stage_map."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Delete		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of applications must be in an onsite/interview stage group	application_onsite_or_interview_stage_group_quality	ats_config → stage_map → onsite stage group	This metric ensures that some applications must be present in onsite stage group. In case this metric fails, please check the stages the applications are in, and make sure there are stages in the stagemap mapped to 'onsite' stage	"**Purpose:** This metric ensures that some applications must be present in onsite stage group. In case this metric fails, please check the stages the applications are in, and make sure there are stages in the stagemap mapped to 'onsite' stage
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure stage mappings in ats_config → stage_map or diversity_dashboard_config → application_stage_map."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of applications must be in hired stage group	application_hired_stage_group_quality	ats_config → stage_map → hired stage group	This metric ensures that some applications must be present in hired stage group. In case this metric fails, please check the stages the applications are in, and make sure there are stages in the stagemap mapped to 'hired' stage	"**Purpose:** This metric ensures that some applications must be present in hired stage group. In case this metric fails, please check the stages the applications are in, and make sure there are stages in the stagemap mapped to 'hired' stage
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure stage mappings in ats_config → stage_map or diversity_dashboard_config → application_stage_map."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of positions should have status	position_status_data_quality	Position Sync (ATS) → position.status	This metric ensures that status must be present for positions. This is important for analytics and is also used in the positions page	"**Purpose:** This metric ensures that status must be present for positions. This is important for analytics and is also used in the positions page
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure position status field is mapped in ATS integration."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of positions should have location_country	position_location_country_quality	Position Sync (ATS) → position.location_country	This metric ensures that location_country must be present for positions. This is important for analytics and is generally used while evaluating important metrics like time to fill, time to hire etc	"**Purpose:** This metric ensures that location_country must be present for positions. This is important for analytics and is generally used while evaluating important metrics like time to fill, time to hire etc
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map position location_country field in ATS integration."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of positions should have hiring manager name	position_hiring_manager_name_data_quality	Position Sync (ATS) → position.hiring_manager_name	This metric ensures that HM name must be present for positions. This is important for analytics since this field is used as a filter in some of our dashboards	"**Purpose:** This metric ensures that HM name must be present for positions. This is important for analytics since this field is used as a filter in some of our dashboards
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map hiring manager fields in ATS integration via custom_fields_v2."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of positions should have title	position_title_data_quality	Position Sync (ATS) → position.title	This metric ensures that title must be present for positions. This is important for analytics dashboards and is also used in the positions page	"**Purpose:** This metric ensures that title must be present for positions. This is important for analytics dashboards and is also used in the positions page
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure position title field is mapped in ATS integration."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of positions should have business_unit	position_business_unit_data_quality	Position Sync (ATS) → position.business_unit	This metric ensures that business_unit must be present for positions. This is important for analytics and is generally used while evaluating customer usage and success metrics	"**Purpose:** This metric ensures that business_unit must be present for positions. This is important for analytics and is generally used while evaluating customer usage and success metrics
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map business_unit field in ATS integration via custom_fields_v2."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	Hired stage group mapping should be set up in stagemap	stagemap_hired	ats_config → stage_map → hired stage group mapping	This metric ensures that stages must be mapped to the hired stage group. In case this metric fails, make sure there are stages in the ATS config stagemap mapped to 'hired' stage	"**Purpose:** This metric ensures that stages must be mapped to the hired stage group. In case this metric fails, make sure there are stages in the ATS config stagemap mapped to 'hired' stage
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure stage group mappings in ats_config → stage_map. Ensure all stages are mapped."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	ta_dashboards	TA Analytics	Delete		
+	Analytics	Configure field mappings to classify open positions in analytics	custom_fields_v2_position_is_open	custom_fields_v2 → position → is_open field mapping	"This metric ensures that is_open fields is correctly mapped and must be present for positions. This is important for analytics since this field is used as a filter in some of our dashboards
+
+Please refer to the Sample Configs to find examples for the 'is_open' custom field mapping. For SuccessFactors refer to 'Sample Successfactors Field Mapping'; For ORC refer to 'Sample (1) ORC Integration System'."	"**Purpose:** This metric ensures that is_open fields is correctly mapped and must be present for positions. This is important for analytics since this field is used as a filter in some of our dashboards
+
+Please refer to the Sample Configs to find examples for the 'is_open' custom field mapping. For SuccessFactors refer to 'Sample Successfactors Field Mapping'; For ORC refer to 'Sample (1) ORC Integration System'.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map is_open field in custom_fields_v2 → position configuration."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	ATS config key for classifying applications as 'internal' should be present	internal_app_regex	ats_config → internal_app_regex source type classification	The ATS config key 'internal_app_regex' must be added. This must be setup using the source_type values which correspond to internal applications, so that we can accurately classify them as internal in analytics	"**Purpose:** The ATS config key 'internal_app_regex' must be added. This must be setup using the source_type values which correspond to internal applications, so that we can accurately classify them as internal in analytics
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure internal_app_regex in ats_config to classify internal applications by source_type."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	ATS config key for classifying applications as 'referral' should be present	referral_regex	ats_config → referral_regex source type classification	The ATS config key 'referral_regex' must be added. This must be setup using the source type values which correspond to referral applications, so that we can accurately classify them as referral in analytics	"**Purpose:** The ATS config key 'referral_regex' must be added. This must be setup using the source type values which correspond to referral applications, so that we can accurately classify them as referral in analytics
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure referral_regex in ats_config to classify referral applications by source_type."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	Internal applications should be more than {{ metric_data_json.min_threshold }}% and less than {{ metric_data_json.max_threshold }}%	internal_applications	ats_config → internal_app_regex percentage tracking	This metric tracks the percentage of internal applications. In order to capture the correct source types which indicate an internal application, set the 'internal_app_regex' key in ATS config.	"**Purpose:** This metric tracks the percentage of internal applications. In order to capture the correct source types which indicate an internal application, set the 'internal_app_regex' key in ATS config.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review the configuration settings for this rule in Admin Console or Integration Console."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	ta_dashboards	TA Analytics	Delete		
+	Analytics	Referral applications should be more than {{ metric_data_json.min_threshold }}% and less than {{ metric_data_json.max_threshold }}%	referral_applications	ats_config → referral_regex percentage tracking	This metric tracks the percentage of referral applications. In order to capture the correct source types which indicate a referral application, set the 'referral_regex' key in ATS config.	"**Purpose:** This metric tracks the percentage of referral applications. In order to capture the correct source types which indicate a referral application, set the 'referral_regex' key in ATS config.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure referral_regex in ats_config to classify referral applications by source_type."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	ta_dashboards	TA Analytics	Delete		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of open positions should have recruiter name	open_position_recruiter_name_data_quality	Position Sync (ATS) → position.recruiter_name	This metric ensures that recruiter_name must be present for positions. This is important for analytics dashboards and is also used in the positions page	"**Purpose:** This metric ensures that recruiter_name must be present for positions. This is important for analytics dashboards and is also used in the positions page
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map recruiter fields in ATS integration via custom_fields_v2."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of open positions should have recruiter email	open_position_recruiter_email_data_quality	Position Sync (ATS) → position.recruiter_email	This metric ensures that recruiter_email must be present for positions. This is important for analytics dashboards and is also used in the positions page	"**Purpose:** This metric ensures that recruiter_email must be present for positions. This is important for analytics dashboards and is also used in the positions page
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map recruiter fields in ATS integration via custom_fields_v2."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% applications should be in a stage group that is not 'Others'	application_stage_group_quality	ats_config → stage_map → all stage groups (not 'Others')	This metric ensures that a percentage of applications must be in a stage group other than 'Others'	"**Purpose:** This metric ensures that a percentage of applications must be in a stage group other than 'Others'
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure stage mappings in ats_config → stage_map or diversity_dashboard_config → application_stage_map."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Delete		
+	Analytics	More than {{ metric_data_json.min_threshold }}% applications should have rejection reason	application_rejection_reason_quality	Candidate Sync (ATS) → application.rejection_reason	This rule ensures that rejected applications must have a rejection reason	"**Purpose:** This rule ensures that rejected applications must have a rejection reason
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map rejection reason field in ATS integration via custom_fields_v2."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of hired applications should have hired_ts	application_hired_ts_quality	Candidate Sync (ATS) → application.hired_ts	This rule ensures that applications with hires must have hired_ts populated	"**Purpose:** This rule ensures that applications with hires must have hired_ts populated
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure hired_ts is populated when applications reach hired stage."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of applications should have application_ts	application_ts_quality	Candidate Sync (ATS) → application.application_ts	This rule ensures that all applications must have application_ts populated	"**Purpose:** This rule ensures that all applications must have application_ts populated
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Verify application_ts is captured during application sync."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of applications should have profile_id	application_profile_id_quality	Candidate Sync (ATS) → application.profile_id	This rule ensures that all applications are associated with a profile_id must have profile_id populated	"**Purpose:** This rule ensures that all applications are associated with a profile_id must have profile_id populated
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure applications are linked to profile records during sync."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of applications should have application_id	application_id_quality	Candidate Sync (ATS) → application.application_id	This rule ensures that all applications must have application_id populated. This field is a unique identifier for the application	"**Purpose:** This rule ensures that all applications must have application_id populated. This field is a unique identifier for the application
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Verify application_id is populated for all applications."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of applications should have stage_ts	application_stage_ts_quality	Candidate Sync (ATS) → application.stage_ts	This rule ensures that all application stages must have stage_ts populated	"**Purpose:** This rule ensures that all application stages must have stage_ts populated
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure stage_ts is captured for all stage transitions."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of positions should have hiring_manager email	position_hiring_manager_email_data_quality	Position Sync (ATS) → position.hiring_manager_email	This metric ensures that hiring manager email must be present for positions	"**Purpose:** This metric ensures that hiring manager email must be present for positions
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map hiring manager fields in ATS integration via custom_fields_v2."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of posted positions should have job_function	position_job_function_data_quality	Position Sync (ATS) → position.job_function	This metric ensures that positions have a job function	"**Purpose:** This metric ensures that positions have a job function
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map job_function field in ATS integration."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	More than {{ metric_data_json.min_threshold }}% of positions should have creation_ts	position_creation_ts_data_quality	Position Sync (ATS) → position.creation_ts	This metric ensures that creation_ts must be present for positions	"**Purpose:** This metric ensures that creation_ts must be present for positions
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure creation_ts field is captured during position sync."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% applications should have a status	application_status_quality	Candidate Sync (ATS) → application.status	This rule ensures that all applications must have status column populated	"**Purpose:** This rule ensures that all applications must have status column populated
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Verify status field is populated for all applications."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	More than {{ metric_data_json.min_threshold }}% applications should have 'active' status	application_active_status_quality	Candidate Sync (ATS) → application.status = 'active'	This metric ensures that a percentage of applications are present in active status	"**Purpose:** This metric ensures that a percentage of applications are present in active status
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review the configuration settings for this rule in Admin Console or Integration Console."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	Discrepancy between count of applications with hired_ts and applications in 'hired' stagegroup must be less than {{ metric_data_json.discrepancy_threshold }}%	application_hired_ts_and_hired_stagegroup_discrepancy_quality	ats_config → stage_map / application.hired_ts consistency	This metric tracks the discrepancy between the count of applications with hired_ts vs applications in 'hired' stagegroup. It is done to ensure all applications in hired stage have hired_ts populated and vice versa	"**Purpose:** This metric tracks the discrepancy between the count of applications with hired_ts vs applications in 'hired' stagegroup. It is done to ensure all applications in hired stage have hired_ts populated and vice versa
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure hired_ts is populated when applications reach hired stage."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	Hired stagegroup mapping in ATS config stagemap should match hired mapping in diversity dashboard config	stagemap_hired_equal_to_diversity_config_hired	ats_config → stage_map / diversity_dashboard_config → hired consistency	This rule ensures that if hired stagegroup is set up in diversity dashboard config, then it matches the hired stage group mappings in ATS config stagemap	"**Purpose:** This rule ensures that if hired stagegroup is set up in diversity dashboard config, then it matches the hired stage group mappings in ATS config stagemap
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure stage group mappings in ats_config → stage_map. Ensure all stages are mapped."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	All stages in stage transition map should be mapped in diversity dashboard config	all_stage_transition_map_stages_in_diversity_dashboard_config	diversity_dashboard_config → application_stage_map completeness	Diversity dashboard tracks all application stages in the system and not just those that are in the template to stage transition map config. The description needs to make that clearer	"**Purpose:** Diversity dashboard tracks all application stages in the system and not just those that are in the template to stage transition map config. The description needs to make that clearer
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Ensure all stages in stage_transition_map are also mapped in diversity_dashboard_config."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	ta_dashboards	TA Analytics	Update		
+	Analytics	Application stage map indexes should be unique and continuous	application_stage_map_index_consistency	diversity_dashboard_config → application_stage_map index continuity	Checks the consistency of stage indexes in diversity dashboard config	"**Purpose:** Checks the consistency of stage indexes in diversity dashboard config
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review the configuration settings for this rule in Admin Console or Integration Console."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+	Analytics	Application counts across stage groups should be consistent	application_stage_group_funnel_shape_consistency	diversity_dashboard_config → application_stage_map funnel shape	This metric tracks the application counts across stage groups. The counts across stages in an increasing order of indexes should create a v-shaped funnel	"**Purpose:** This metric tracks the application counts across stage groups. The counts across stages in an increasing order of indexes should create a v-shaped funnel
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure stage mappings in ats_config → stage_map or diversity_dashboard_config → application_stage_map."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	ta_dashboards	TA Analytics	Keep as is		
+Talent Intelligence Platform	Platform	Talent Lake provisioned	talent_lake_provisioned	Talent Lake provisioning / Data Warehouse enablement	[Purpose] Confirms whether Talent Lake, a key feature of the Talent Intelligence Platform, is provisioned.<br>[Impact] Without Talent Lake, advanced analytics and talent insights are unavailable, reducing platform utility.	"**Purpose:** Confirms whether Talent Lake, a key feature of the Talent Intelligence Platform, is provisioned.  Without Talent Lake, advanced analytics and talent insights are unavailable, reducing platform utility.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Contact Eightfold support to provision Talent Lake for your instance."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py	data_warehouse	Data Warehouse	Keep as is	Data Warehouse	NA
+Talent Intelligence Platform	Platform	Data retention	data_retention_config	data_retention_config → GDPR/CCPA compliance rules	"[Purpose] Ensures data retention policies are configured to purge or anonymize historical candidate data as per compliance requirements, including GDPR, CCPA, and other applicable privacy regulations. A minimum of one data retention rule must be defined for the talent pool present in Eightfold to ensure proper data lifecycle management.
+[Impact] Non-compliance with data privacy laws could result in legal risks, regulatory penalties, and data mismanagement. Inadequate data retention policies may lead to unnecessary data storage costs and potential security vulnerabilities."	"**Purpose:** Ensures data retention policies are configured to purge or anonymize historical candidate data as per compliance requirements, including GDPR, CCPA, and other applicable privacy regulations. A minimum of one data retention rule must be defined for the talent pool present in Eightfold to ensure proper data lifecycle management.
+ Non-compliance with data privacy laws could result in legal risks, regulatory penalties, and data mismanagement. Inadequate data retention policies may lead to unnecessary data storage costs and potential security vulnerabilities.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure at least one data retention rule in data_retention_config for GDPR/CCPA compliance."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py	data_retention	Data retention	Update	Admin Console	Can be updated to add details for what config keys system is looking for to validate this rule. Example: Minimum 1 rule should be defined for talent pool in eightfold
+Talent Intelligence Platform	Platform	Email loopback	email_loopback	email_loopback_gate / loopback_whitelisted_recipient_emails	"[Purpose] Currently email loopback is activated for all sandbox instances. In sandbox environments, this ensures emails are routed back to the logged-in user to prevent real recipients from receiving test notifications. In production environments, the loopback should be disabled to allow emails to be sent to actual candidates and interviewers. To facilitate email flow testing without sending emails to unintended recipients, please setup loopback_whitelisted_recipient_emails configuration. By adding tester emails to this list, you can ensure that only specified addresses receive the emails, enhancing testing accuracy and security. <br>[Impact] Failure to enable email loopback in sandbox environments can result in test emails being sent to real recipients, causing confusion and potential data privacy issues. Conversely, if enabled in production, actual recipients will not receive critical notifications.
+
+Please read more here: https://docs.eightfold.ai/integration/enhanced-email-loopback"	"**Purpose:** Currently email loopback is activated for all sandbox instances. In sandbox environments, this ensures emails are routed back to the logged-in user to prevent real recipients from receiving test notifications. In production environments, the loopback should be disabled to allow emails to be sent to actual candidates and interviewers. To facilitate email flow testing without sending emails to unintended recipients, please setup loopback_whitelisted_recipient_emails configuration. By adding tester emails to this list, you can ensure that only specified addresses receive the emails, enhancing testing accuracy and security.   Failure to enable email loopback in sandbox environments can result in test emails being sent to real recipients, causing confusion and potential data privacy issues. Conversely, if enabled in production, actual recipients will not receive critical notifications.
+
+Please read more here: https://docs.eightfold.ai/integration/enhanced-email-loopback
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure email_loopback_gate: enable for sandbox, disable for production environments."	www/data_audit/platform_health/config_health/product_config_health_configurable_rules.py	email_loopback_feature	Email loopback	Update	Admin Console	Add the config key or gate required for this functionality. This should work by default unless overwritten by a config/gate
+Talent Intelligence Platform	Integrations	oauth_settings should be defined	oauth_enabled	integration_systems → [adaptor] → oauth_settings	"[Purpose] Ensures integrations utilize OAuth authentication when supported by the adaptor to enhance security posture and reduce credential exposure risks
+[Impact] Using OAuth provides enhanced security through token-based authentication, automatic token refresh capabilities, and reduced risk of credential compromise. Failure to implement OAuth where supported may result in security vulnerabilities, compliance issues, and increased maintenance overhead for credential management."	"**Purpose:** Ensures integrations utilize OAuth authentication when supported by the adaptor to enhance security posture and reduce credential exposure risks
+ Using OAuth provides enhanced security through token-based authentication, automatic token refresh capabilities, and reduced risk of credential compromise. Failure to implement OAuth where supported may result in security vulnerabilities, compliance issues, and increased maintenance overhead for credential management.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure OAuth settings in integration_systems for supported ATS adaptors."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	This is rule checks whether Integrations is using Oauth for connection. Add the supported adaptors names only
+Talent Intelligence Platform	Integrations	Position Sync Lag Rule	position_sync_lag_rule	ats_config → position sync / sync_lag_threshold (60 min)	This rule evaluates the health of position sync for the group_id. Position sync lag must be lower than 60 minutes for the last 7 days for this rule to pass.	"**Purpose:** This rule evaluates the health of position sync for the group_id. Position sync lag must be lower than 60 minutes for the last 7 days for this rule to pass.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review the configuration settings for this rule in Admin Console or Integration Console."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py	integrations	Integrations	Update	HR Systems Integrations	In actual this rule has more description in admin console than the excel sheet
+Talent Intelligence Platform	Integrations	Candidate Sync Lag Rule	candidate_sync_lag_rule	ats_config → candidate sync / sync_lag_threshold (60 min)	This rule evaluates the health of candidate sync for the group_id. Candidate sync lag must be lower than 60 minutes for the last 7 days for this rule to pass.	"**Purpose:** This rule evaluates the health of candidate sync for the group_id. Candidate sync lag must be lower than 60 minutes for the last 7 days for this rule to pass.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review the configuration settings for this rule in Admin Console or Integration Console."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py	integrations	Integrations	Keep as is	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Employee Sync Lag Rule	employee_sync_lag_rule	ats_config → employee sync / sync_lag_threshold (24 hours)	This rule evaluates the health of employee sync for the group_id. Employee sync lag must be lower than 24 hours for the last 7 days for this rule to pass.	"**Purpose:** This rule evaluates the health of employee sync for the group_id. Employee sync lag must be lower than 24 hours for the last 7 days for this rule to pass.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Review the configuration settings for this rule in Admin Console or Integration Console."	www/data_audit/platform_health/operational_health/operational_health_evaluation_rules.py	integrations	Integrations	Keep as is	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Candidate Webhook Sync Rule	candidate_webhook_sync_rule	integration_systems → webhook_settings (90% success rate)	This rule evaluates the health of candidate webhook syncs for the group_id. Atleast 90% of webhook candidate syncs from last 7 days should pass.	"**Purpose:** This rule evaluates the health of candidate webhook syncs for the group_id. Atleast 90% of webhook candidate syncs from last 7 days should pass.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Enable and configure webhook settings in integration_systems for real-time sync."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	Should be applicable for supported adaptors only
+Talent Intelligence Platform	Integrations	Position Webhook Sync Rule	position_webhook_sync_rule	integration_systems → webhook_settings (90% success rate)	This rule evaluates the health of position webhook syncs for the group_id. Atleast 90% of webhook position syncs from last 7 days should pass.	"**Purpose:** This rule evaluates the health of position webhook syncs for the group_id. Atleast 90% of webhook position syncs from last 7 days should pass.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Enable and configure webhook settings in integration_systems for real-time sync."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	Should be applicable for supported adaptors only
+Talent Intelligence Platform	Integrations	Webhook Event Failure Rule	webhook_event_failure_rule	integration_systems → webhook_settings health	This rule evaluates the health of webhook events for the group_id.	"**Purpose:** This rule evaluates the health of webhook events for the group_id.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Enable and configure webhook settings in integration_systems for real-time sync."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	Should be applicable for supported adaptors only
+Talent Intelligence Platform	Integrations	Webhook should be set up for candidate and position	webhook_enabled	integration_systems → webhook_settings.status = enabled	webhook_settings.status should be enabled	"**Purpose:** webhook_settings.status should be enabled
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Enable and configure webhook settings in integration_systems for real-time sync."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	Should be applicable for supported adaptors only
+Talent Intelligence Platform	Integrations	Hired stage group mapping should be set up in stagemap	stagemap_hired	ats_config → stage_map → hired stage group mapping	This rule ensures that the hired stage group mapping is set up in ATS config stagemap. The hired stage group must be defined to evaluate the 'Average Days to Hire' metric and crucial for identifying candidates as 'hired'.	"**Purpose:** This rule ensures that the hired stage group mapping is set up in ATS config stagemap. The hired stage group must be defined to evaluate the 'Average Days to Hire' metric and crucial for identifying candidates as 'hired'.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure stage group mappings in ats_config → stage_map. Ensure all stages are mapped."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for application.reason field should be setup	custom_fields_v2_application_reason	custom_fields_v2 → application → reason (rejection reasons)	"Config Key: custom_fields_v2_application_reason
+Description
+This health rule validates that the application.reason field is properly configured in the Custom Fields V2 mapping for your ATS integration. The application.reason field captures rejection reasons when candidates are moved to rejection stages in the hiring workflow.
+What It Checks
+Verifies that custom_fields_v2 > application > reason is configured in your Integration System
+Ensures the mapping correctly extracts rejection reason data from your source ATS
+Why It Matters
+Proper configuration of the application.reason field is critical for:
+Talent Analytics & Reporting
+Rejection reason data populates the rejection_reason field in the Data Warehouse (Application table)
+Powers analytics dashboards and hiring funnel reports
+Enables rejection reason trend analysis over time
+AI Model Training
+Rejection reasons are used in Outcome Data classification
+Helps distinguish between ""not screened"" vs ""not qualified"" rejection types
+Improves candidate scoring and recommendation accuracy
+Workflow Automation
+Enables rejection reason-based triggers in Workflow Automation Center
+Allows custom actions based on specific rejection reasons
+Supports compliance and auditing requirements
+Candidate Experience
+Proper tracking ensures rejection reasons are available for candidate communications
+Maintains historical context for re-applications
+Impact of Missing Configuration
+Without this mapping:
+Rejection reason data will not flow from your ATS to Eightfold
+Analytics reports will show blank/null values for rejection reasons
+Outcome data classification accuracy may be reduced
+Workflow automation rules based on rejection reasons will not trigger"	"**Purpose:** Config Key: custom_fields_v2_application_reason
+Description
+This health rule validates that the application.reason field is properly configured in the Custom Fields V2 mapping for your ATS integration. The application.reason field captures rejection reasons when candidates are moved to rejection stages in the hiring workflow.
+What It Checks
+Verifies that custom_fields_v2 > application > reason is configured in your Integration System
+Ensures the mapping correctly extracts rejection reason data from your source ATS
+Why It Matters
+Proper configuration of the application.reason field is critical for:
+Talent Analytics & Reporting
+Rejection reason data populates the rejection_reason field in the Data Warehouse (Application table)
+Powers analytics dashboards and hiring funnel reports
+Enables rejection reason trend analysis over time
+AI Model Training
+Rejection reasons are used in Outcome Data classification
+Helps distinguish between not screened vs not qualified rejection types
+Improves candidate scoring and recommendation accuracy
+Workflow Automation
+Enables rejection reason-based triggers in Workflow Automation Center
+Allows custom actions based on specific rejection reasons
+Supports compliance and auditing requirements
+Candidate Experience
+Proper tracking ensures rejection reasons are available for candidate communications
+Maintains historical context for re-applications
+Impact of Missing Configuration
+Without this mapping:
+Rejection reason data will not flow from your ATS to Eightfold
+Analytics reports will show blank/null values for rejection reasons
+Outcome data classification accuracy may be reduced
+Workflow automation rules based on rejection reasons will not trigger
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for position.recruiter field should be setup	custom_fields_v2_position_recruiter	custom_fields_v2 → position → recruiter field mapping	General custom_fields_v2.position configurations that can include recruiter field mappings to be populated for position details. Also used in screening dashboard and analytics contexts - Workday	"**Purpose:** General custom_fields_v2.position configurations that can include recruiter field mappings to be populated for position details. Also used in screening dashboard and analytics contexts - Workday
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for position.hiring_manager field should be setup	custom_fields_v2_position_hiring_manager	custom_fields_v2 → position → hiring_manager field mapping	General custom_fields_v2.position configurations that can include hiring manager field mappings to be populated for position details. Also used in screening dashboard and analytics contexts - Workday	"**Purpose:** General custom_fields_v2.position configurations that can include hiring manager field mappings to be populated for position details. Also used in screening dashboard and analytics contexts - Workday
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map hiring manager fields in ATS integration via custom_fields_v2."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for custom_fields_v2.position.hiring_band field should be setup	custom_fields_v2_position_hiring_band	custom_fields_v2 → position → hiring_band field mapping	"Salary/compensation bands: Categorizes positions into compensation levels (e.g., 'C', 'Band 1', 'Senior Level')
+Job leveling: Helps determine seniority and responsibility levels
+Career progression: Used for internal mobility and promotion tracking"	"**Purpose:** Salary/compensation bands: Categorizes positions into compensation levels (e.g., 'C', 'Band 1', 'Senior Level')
+Job leveling: Helps determine seniority and responsibility levels
+Career progression: Used for internal mobility and promotion tracking
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	integrations	Integrations	Update	HR Systems Integrations	This rule is to ensure, position hiring bands are correctly mapped into eightfold as internal mobility config is dependent on these
+Talent Intelligence Platform	Integrations	Custom Field mapping for position.job_function field should be setup	custom_fields_v2_position_job_function	custom_fields_v2 → position → job_function field mapping	"Analytics usage:
+Used in Spark SQL queries for position analytics
+Part of position data warehouse schema
+Used for job categorization and reporting
+The job_function field is typically handled automatically by ATS adapters through their standard field mappings rather than requiring custom field configuration."	"**Purpose:** Analytics usage:
+Used in Spark SQL queries for position analytics
+Part of position data warehouse schema
+Used for job categorization and reporting
+The job_function field is typically handled automatically by ATS adapters through their standard field mappings rather than requiring custom field configuration.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map job_function field in ATS integration."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	integrations	Integrations	Update	HR Systems Integrations	This rule is to ensure standard position field is mapped into eightfold as this as downstream usecases in dashboards, filters, role, display purpose
+Talent Intelligence Platform	Integrations	Custom Field mapping for position.business_unit field should be setup	custom_fields_v2_position_business_unit	custom_fields_v2 → position → business_unit field mapping	"Data health rule: position_business_unit_data_quality checks that 95% of positions have non-null business_unit values
+Analytics: Used in position data analytics and MySQL/Redshift consistency checks
+Business intelligence: Critical for organizational reporting and position categorization"	"**Purpose:** Data health rule: position_business_unit_data_quality checks that 95% of positions have non-null business_unit values
+Analytics: Used in position data analytics and MySQL/Redshift consistency checks
+Business intelligence: Critical for organizational reporting and position categorization
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Map business_unit field in ATS integration via custom_fields_v2."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	integrations	Integrations	Update	HR Systems Integrations	This rule is to ensure standard position field is mapped into eightfold as this as downstream usecases in dashboards, filters, role, display purpose
+Talent Intelligence Platform	Integrations	Custom Field mapping for application.race field should be setup	custom_fields_v2_application_race	custom_fields_v2 → application → race (EEOC)	"Jobvite: Extracts from race field, filtering out 'Undefined' values
+Workday: Extracts from multiple EEOC race/ethnicity reference fields (wd:race, wd:Ethnicity_Reference, wd:Ethnicity)
+Standard ATS model: All ATS adapters support the race field
+EEOC context: Like other EEOC fields (veteran_status, disability_status, gender), race is typically handled automatically by ATS adapters as part of EEOC compliance requirements rather than requiring custom field mapping."	"**Purpose:** Jobvite: Extracts from race field, filtering out 'Undefined' values
+Workday: Extracts from multiple EEOC race/ethnicity reference fields (wd:race, wd:Ethnicity_Reference, wd:Ethnicity)
+Standard ATS model: All ATS adapters support the race field
+EEOC context: Like other EEOC fields (veteran_status, disability_status, gender), race is typically handled automatically by ATS adapters as part of EEOC compliance requirements rather than requiring custom field mapping.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for application.gender field should be setup	custom_fields_v2_application_gender	custom_fields_v2 → application → gender (EEOC)	"Jobvite: Extracts from gender field and fallback to customField array
+Workday: Extracts from multiple EEOC gender reference fields (wd:gender, wd:Gender_Reference, wd:Gender)
+Standard ATS model: All ATS adapters support the gender field
+EEOC context: Like other EEOC fields (veteran_status, disability_status), gender is typically handled automatically by ATS adapters rather than requiring custom field mapping."	"**Purpose:** Jobvite: Extracts from gender field and fallback to customField array
+Workday: Extracts from multiple EEOC gender reference fields (wd:gender, wd:Gender_Reference, wd:Gender)
+Standard ATS model: All ATS adapters support the gender field
+EEOC context: Like other EEOC fields (veteran_status, disability_status), gender is typically handled automatically by ATS adapters rather than requiring custom field mapping.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for application.disability_status field should be setup	custom_fields_v2_application_disability_status	custom_fields_v2 → application → disability_status (EEOC)	"SuccessFactors: Uses picklist field disabilityStatus with specific regex patterns
+Workday: Extracts from EEOC questionnaire data with built-in logic
+Standard ATS model: All ATS adapters support the disability_status boolean field
+EEOC context: Like veteran status, disability status is typically handled automatically by ATS adapters as part of EEOC compliance requirements rather than requiring custom field mapping."	"**Purpose:** SuccessFactors: Uses picklist field disabilityStatus with specific regex patterns
+Workday: Extracts from EEOC questionnaire data with built-in logic
+Standard ATS model: All ATS adapters support the disability_status boolean field
+EEOC context: Like veteran status, disability status is typically handled automatically by ATS adapters as part of EEOC compliance requirements rather than requiring custom field mapping.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for application.veteran_status field should be setup	custom_fields_v2_application_veteran_status	custom_fields_v2 → application → veteran_status (EEOC)	"Built-in extraction: Multiple ATS adapters have dedicated functions for veteran status extraction:
+Jobvite: a.veteran_status = not regex_utils.search(r'^(decline|not)\b', application['veteranStatus'].lower())
+SuccessFactors: extract_veteran_status() with regex matching for ""I am a protected veteran""
+Workday: extract_candidate_veteran_status() from EEOC data"	"**Purpose:** Built-in extraction: Multiple ATS adapters have dedicated functions for veteran status extraction:
+Jobvite: a.veteran_status = not regex_utils.search(r'^(decline|not)\b', application['veteranStatus'].lower())
+SuccessFactors: extract_veteran_status() with regex matching for I am a protected veteran
+Workday: extract_candidate_veteran_status() from EEOC data
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for candidate.race field should be setup	custom_fields_v2_candidate_race	custom_fields_v2 → candidate → race (EEOC)	"Workday extraction: Built-in functions extract race/ethnicity from EEOC data using _get_field_value()
+EEOC compliance: Used for Equal Employment Opportunity Commission reporting and diversity tracking
+Data sources: Extracted from application questionnaires and EEOC forms"	"**Purpose:** Workday extraction: Built-in functions extract race/ethnicity from EEOC data using _get_field_value()
+EEOC compliance: Used for Equal Employment Opportunity Commission reporting and diversity tracking
+Data sources: Extracted from application questionnaires and EEOC forms
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for candidate.gender field should be setup	custom_fields_v2_candidate_gender	custom_fields_v2 → candidate → gender (EEOC)	"Workday extraction: Built-in functions extract gender from EEOC data using _get_field_value()
+EEOC compliance: Used for Equal Employment Opportunity Commission reporting
+Data sources: Extracted from application questionnaires and EEOC forms"	"**Purpose:** Workday extraction: Built-in functions extract gender from EEOC data using _get_field_value()
+EEOC compliance: Used for Equal Employment Opportunity Commission reporting
+Data sources: Extracted from application questionnaires and EEOC forms
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for candidate.disability_status field should be setup	custom_fields_v2_candidate_disability_status	custom_fields_v2 → candidate → disability_status (EEOC)	"Workday extraction: Built-in functions extract_candidate_disability_status() in Workday adapters handle disability status extraction
+EEOC compliance: Used for Equal Employment Opportunity Commission reporting and accessibility compliance
+Data sources: Extracted from application questionnaires and EEOC forms"	"**Purpose:** Workday extraction: Built-in functions extract_candidate_disability_status() in Workday adapters handle disability status extraction
+EEOC compliance: Used for Equal Employment Opportunity Commission reporting and accessibility compliance
+Data sources: Extracted from application questionnaires and EEOC forms
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Custom Field mapping for candidate.veteran_status field should be setup	custom_fields_v2_candidate_veteran_status	custom_fields_v2 → candidate → veteran_status (EEOC)	"Workday extraction: Built-in functions extract_candidate_veteran_status() in Workday adapters handle veteran status extraction
+EEOC compliance: Used for Equal Employment Opportunity Commission reporting
+Data sources: Extracted from application questionnaires and EEOC forms"	"**Purpose:** Workday extraction: Built-in functions extract_candidate_veteran_status() in Workday adapters handle veteran status extraction
+EEOC compliance: Used for Equal Employment Opportunity Commission reporting
+Data sources: Extracted from application questionnaires and EEOC forms
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure field mappings in Integration Console → Field Mapping → custom_fields_v2."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	RAAS List Reports for candidates should be setup	candidate_raas_list_report	Workday → RAAS List Report for candidates	Workday extraction: Built-in functions extract_candidate_veteran_status() in Workday adapters handle veteran status extraction	"**Purpose:** Workday extraction: Built-in functions extract_candidate_veteran_status() in Workday adapters handle veteran status extraction
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure RAAS List Reports in Workday for the specified entity type."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	RAAS List Reports for positions should be setup	position_raas_list_report	Workday → RAAS List Report for positions	This must be setup to meet the sync lag SLA requirement for the entity_type: position	"**Purpose:** This must be setup to meet the sync lag SLA requirement for the entity_type: position
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure RAAS List Reports in Workday for the specified entity type."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	internal_job_posting_sites should be configured	internal_job_posting_sites	enterprise_config → internal_job_posting_sites (Workday/Taleo)	"Purpose: Defines which job board/posting site IDs are classified as internal (employee-only) job postings
+Usage: Used alongside external_job_posting_sites to determine if a job posting is internal vs external
+ATS systems: Used in Workday and Taleo (same systems as external_job_posting_sites)
+Configuration path: enterprise_config → internal_job_posting_sites"	"**Purpose:** Purpose: Defines which job board/posting site IDs are classified as internal (employee-only) job postings
+Usage: Used alongside external_job_posting_sites to determine if a job posting is internal vs external
+ATS systems: Used in Workday and Taleo (same systems as external_job_posting_sites)
+Configuration path: enterprise_config → internal_job_posting_sites
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure job posting site IDs in enterprise_config for internal/external classification."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	external_job_posting_sites should be configured	external_job_posting_sites	enterprise_config → external_job_posting_sites (Workday/Taleo/SF/Greenhouse)	"Purpose: Defines which job board/posting site IDs are classified as external (public) job postings
+Usage: Used to determine if a job posting is external vs internal when processing job data
+ATS systems: Used in Workday, Taleo, SuccessFactors, and Greenhouse
+Default value: ['_external'] for SuccessFactors
+Configuration path: enterprise_config → external_job_posting_sites"	"**Purpose:** Purpose: Defines which job board/posting site IDs are classified as external (public) job postings
+Usage: Used to determine if a job posting is external vs internal when processing job data
+ATS systems: Used in Workday, Taleo, SuccessFactors, and Greenhouse
+Default value: ['_external'] for SuccessFactors
+Configuration path: enterprise_config → external_job_posting_sites
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure job posting site IDs in enterprise_config for internal/external classification."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	add_application_sources referral source id value should be configured	add_application_sources_referral	integration_systems → add_application_sources → referral (iCIMS/Jobvite)	add_application_sources_referral maps applications with source_type: 'referral' to a specific value in ATS systems, ensuring referral applications are correctly tagged, while other ATS systems handle referrals differently. -  iCIMS and Jobvite	"**Purpose:** add_application_sources_referral maps applications with source_type: 'referral' to a specific value in ATS systems, ensuring referral applications are correctly tagged, while other ATS systems handle referrals differently. -  iCIMS and Jobvite
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure referral_regex in ats_config to classify referral applications by source_type."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	add_application_sources employee source id value should be configured	add_application_sources_employee	integration_systems → add_application_sources → employee (iCIMS/Jobvite)	add_application_sources_employee maps source_type: 'employee' to a specific value in ATS systems, ensuring internal applications are correctly tagged, - iCIMS and Jobvite	"**Purpose:** add_application_sources_employee maps source_type: 'employee' to a specific value in ATS systems, ensuring internal applications are correctly tagged, - iCIMS and Jobvite
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure application source mappings in integration_systems for correct source tagging."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	add_application_sources applied source id value should be configured	add_application_sources_applied	integration_systems → add_application_sources → applied (iCIMS/Jobvite)	add_application_sources_applied maps source_type: 'applied' to a specific value in ATS systems, ensuring external applications are correctly tagged, - iCIMS and Jobvite	"**Purpose:** add_application_sources_applied maps source_type: 'applied' to a specific value in ATS systems, ensuring external applications are correctly tagged, - iCIMS and Jobvite
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure application source mappings in integration_systems for correct source tagging."	www/data_audit/platform_health/data_health/data_health_evaluation_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	internal_app_regex.source_type in ATS Config should have current worker	internal_app_regex_source_type	integration_systems → internal_app_regex → source_type	"This check internal_app_regex_source_type is a configuration parameter that automatically classifies job applications as internal by matching the application's source_type field against a regex pattern (e.g., ""internal"" or ""employee""), affecting analytics, reporting, and workflows, and is configured via integration_systems → [system-id] → internal_app_regex → source_type."	"**Purpose:** This check internal_app_regex_source_type is a configuration parameter that automatically classifies job applications as internal by matching the application's source_type field against a regex pattern (e.g., internal or employee), affecting analytics, reporting, and workflows, and is configured via integration_systems → [system-id] → internal_app_regex → source_type.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure internal_app_regex in ats_config to classify internal applications by source_type."	www/data_audit/platform_health/config_health/ats_config_health_configurable_rules.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	career_site_source_id should be set in ats_config to send correct source during application writeback to SF	career_site_source_id	integration_systems → career_site_source_id (SuccessFactors)	This check career_site_source_id is a configuration parameter that tags applications from the company's career site or job board by setting the source ID in ATS systems ensuring accurate source tracking for applications submitted through PCS, typically configured via career_site_source_id in the ATS system. - SuccessFactors	"**Purpose:** This check career_site_source_id is a configuration parameter that tags applications from the company's career site or job board by setting the source ID in ATS systems ensuring accurate source tracking for applications submitted through PCS, typically configured via career_site_source_id in the ATS system. - SuccessFactors
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Set career_site_source_id in ATS config for SuccessFactors application writeback."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	list_terminated_employees should be enabled	list_terminated_employees	integration_systems → list_terminated_employees (SuccessFactors)	This check list_terminated_employees is a SuccessFactors-specific configuration flag that controls whether to include terminated/inactive employees when fetching employee data. - SuccessFactors	"**Purpose:** This check list_terminated_employees is a SuccessFactors-specific configuration flag that controls whether to include terminated/inactive employees when fetching employee data. - SuccessFactors
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Enable list_terminated_employees in SuccessFactors integration settings."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	stage_advance_using_odata should be enabled	stage_advance_using_odata	integration_systems → stage_advance_using_odata (SuccessFactors)	The stage_advance_using_odata flag modernizes your SuccessFactors integration by switching from legacy APIs to the more capable OData API for application stage management operations. - SuccessFactors	"**Purpose:** The stage_advance_using_odata flag modernizes your SuccessFactors integration by switching from legacy APIs to the more capable OData API for application stage management operations. - SuccessFactors
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Enable stage_advance_using_odata for SuccessFactors OData API integration."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	hide_skipped_statuses_in_application_trail should be enabled	hide_skipped_statuses_in_application_trail	integration_systems → hide_skipped_statuses_in_application_trail (SF)	The hide_skipped_statuses_in_application_trail rule cleans up the application history by filtering out phantom stages that SuccessFactors automatically creates but that applications never actually visit, providing a more accurate and user-friendly view of the application journey. - SuccessFactor	"**Purpose:** The hide_skipped_statuses_in_application_trail rule cleans up the application history by filtering out phantom stages that SuccessFactors automatically creates but that applications never actually visit, providing a more accurate and user-friendly view of the application journey. - SuccessFactor
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Enable hide_skipped_statuses_in_application_trail for cleaner SF application history."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	RAAS List Reports for questionnaires should be setup	questionnaire_raas_list_report	Workday → RAAS List Report for questionnaires	This should be configured to auto generate questionnaires along with dependencies, this is useful for (A) customers using smart_apply and want to fetch questions from workday automatically and/or (B) customer needs correct question text to be available in application section of candidate profile(TA)	"**Purpose:** This should be configured to auto generate questionnaires along with dependencies, this is useful for (A) customers using smart_apply and want to fetch questions from workday automatically and/or (B) customer needs correct question text to be available in application section of candidate profile(TA)
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Configure RAAS List Reports in Workday for the specified entity type."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Integrations	Internal to external candidate conversion rule	internal_to_external_candidate_profile_conversion_rule	SuccessFactors → internal to external conversion setting	This rule succeeds if internal to external candidate conversion is enabled in successfactors (SF). This is not a setting in Eightfold rather needs to be setup in SF. This rule needs manual exemption as there is no automated way to validate if the job is enabled.	"**Purpose:** This rule succeeds if internal to external candidate conversion is enabled in successfactors (SF). This is not a setting in Eightfold rather needs to be setup in SF. This rule needs manual exemption as there is no automated way to validate if the job is enabled.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Enable internal to external candidate conversion in SuccessFactors. This requires SF admin configuration."	www/integrations_console/config_health/config_health_rule.py	integrations	Integrations	Update	HR Systems Integrations	NA
+Talent Intelligence Platform	Platform	Reply to shouldn't be set to support@eightfold.ai by default.	reply_to_eightfold_support_email_validation	email_config → reply_to (not support@eightfold.ai)	This rule checks if the default reply to is set support@eightfold.ai. It should be modified to the customer's level 1 admin or support team. Only authorized team members can submit a support ticket to the Eightfold Support team. Consult the account CSM if unsure what email address to place here.	"**Purpose:** This rule checks if the default reply to is set support@eightfold.ai. It should be modified to the customer's level 1 admin or support team. Only authorized team members can submit a support ticket to the Eightfold Support team. Consult the account CSM if unsure what email address to place here.
+
+**Impact:** Rule failure indicates data quality or configuration issues that may affect system functionality and reporting accuracy.
+
+**To Fix:** Update reply_to email in email_config from support@eightfold.ai to customer support email."	www/integrations_console/config_health/config_health_rule.py	support_health_check	Support Health Check	Update	Admin Console	NA
