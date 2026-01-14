@@ -12,9 +12,21 @@ This document covers the **Instance Health Rules documentation and enhancement w
 
 ---
 
-## 🤖 **AI Agent: Using the Technical Reference for Rule Descriptions**
+## 🤖 **AI Agent: Technical Reference as Primary Knowledge Source**
 
-When generating or enhancing rule descriptions, AI agents should use the **INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md** as the primary knowledge source.
+### ⚠️ IMPORTANT: For ANY Query Related to Instance Health Rules
+
+**ALWAYS consult the Technical Reference first** for any question, task, or query related to Instance Health rules, including but not limited to:
+
+- ❓ Rule descriptions, purposes, or impacts
+- 🔧 Configuration paths and schemas
+- 🐛 Troubleshooting rule failures
+- 📊 Data quality thresholds
+- 🔗 Feature mappings and dependencies
+- 📝 Resolution steps and Admin Console paths
+- 💻 Code references and implementation details
+- 🏷️ Rule categorization (Config Health, Data Health, Operational Health)
+- ✅ Checkpoint assignments
 
 ### Primary Knowledge Document
 
@@ -26,8 +38,93 @@ This comprehensive document contains:
 - **Resolution Steps**: Step-by-step instructions to fix failures
 - **Config Locations**: Admin Console paths and config names
 - **Feature Mappings**: Which product features each rule validates
+- **Code References**: File paths in the Eightfold codebase
+- **Confluence Links**: Official documentation references
+- **Thresholds**: Data quality thresholds (typically 95%)
 
-### Description Format Standard
+---
+
+## 📝 **AI Agent: Updating the Technical Reference**
+
+### When to Update the Technical Reference
+
+**UPDATE the `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md` when you learn NEW information about rules**, including:
+
+1. **New Rule Details**: When you discover rule logic, configs, or resolution steps not already documented
+2. **Corrections**: When you find inaccuracies in existing documentation
+3. **New Rules**: When new rules are added to the platform
+4. **Config Schema Changes**: When configuration structures change
+5. **New Resolution Steps**: When you learn better or updated fix instructions
+6. **Code Path Updates**: When implementation files move or change
+7. **Threshold Changes**: When data quality thresholds are updated
+8. **Feature Mappings**: When rules are associated with different product features
+9. **Confluence Updates**: When official documentation links change
+
+### How to Update the Technical Reference
+
+1. **Identify the Section**: Find the appropriate section for the rule/topic
+2. **Preserve Existing Format**: Match the existing documentation style
+3. **Include All Details**:
+   - Rule ID
+   - Feature Mapping
+   - Config Location
+   - Rule Logic (if available)
+   - Configuration Schema
+   - Technical Description
+   - Resolution Steps
+4. **Add Code References**: Include file paths when known
+5. **Commit with Clear Message**: Describe what was added/changed
+
+### Update Format Examples
+
+**For a new rule:**
+```markdown
+### new_rule_id
+
+**Feature Mapping:** [Product Feature]  
+**Config Location:** `config_name`
+
+#### Rule Logic
+```python
+# Code showing how the rule evaluates
+```
+
+#### Configuration Schema
+```json
+{
+  "field": "value"
+}
+```
+
+#### Technical Description
+[What the rule does and why it matters]
+
+#### Resolution Steps
+1. Navigate to: Admin Console → [Path]
+2. Configure: [Specific settings]
+3. Verify: [How to confirm it's fixed]
+```
+
+**For updating existing rule information:**
+```markdown
+<!-- Add to the existing rule section -->
+
+**Additional Notes:**
+- [New information learned]
+- [Updated resolution steps]
+- [Configuration changes]
+```
+
+### What NOT to Update
+
+- ❌ Don't remove existing information unless it's confirmed incorrect
+- ❌ Don't change the document structure significantly
+- ❌ Don't add speculative information - only confirmed details
+- ❌ Don't duplicate information already present
+
+---
+
+## 📋 **Rule Description Format Standard**
 
 All rule descriptions should follow this **Purpose / Impact / To Fix** format:
 
@@ -49,7 +146,17 @@ All rule descriptions should follow this **Purpose / Impact / To Fix** format:
 **To Fix:** Navigate to Admin Console → Provisioning → Email & SMS Configuration. Configure send_from_domain and reply_to_domain with verified domains.
 ```
 
-### How to Use the Technical Reference
+---
+
+## 🔍 **How to Use the Technical Reference**
+
+### For Any Rule-Related Query:
+
+1. **Search by Rule ID**: Look for the exact rule_id (e.g., `employee_level_quality`)
+2. **Search by Feature**: Look in the relevant product section (TM Core, TA PCS, etc.)
+3. **Search by Config**: Look for the config name (e.g., `ijp_config`, `scheduling_config`)
+
+### For Rule Descriptions:
 
 1. **Find the Rule**: Search for the rule_id in the technical reference
 2. **Extract Key Details**:
@@ -63,29 +170,38 @@ All rule descriptions should follow this **Purpose / Impact / To Fix** format:
    - **To Fix**: What Admin Console path and specific steps?
 4. **Reference Resolution Steps**: Use the exact steps from the technical reference
 
+### For Troubleshooting:
+
+1. **Find the Rule**: Locate the rule in the technical reference
+2. **Check Resolution Steps**: Follow the documented fix instructions
+3. **Review Config Schema**: Understand what values are expected
+4. **Check Code Reference**: For deeper debugging, locate the implementation file
+
 ### Key Sections in Technical Reference
 
 | Section | Content | Use For |
 |---------|---------|---------|
-| Talent Management - Core Rules | TM data quality, Career Hub config | TM Core descriptions |
-| Talent Management - Leader Experience Rules | Succession, HRBP, Team View | TM Leader descriptions |
-| Talent Acquisition - Core Rules | Scheduling, Feedback, Pipeline | TA Core descriptions |
-| Talent Acquisition - PCS Rules | Career Site, Smart Apply | TA PCS descriptions |
+| Talent Management - Core Rules | TM data quality, Career Hub config | TM Core queries |
+| Talent Management - Leader Experience Rules | Succession, HRBP, Team View | TM Leader queries |
+| Talent Acquisition - Core Rules | Scheduling, Feedback, Pipeline | TA Core queries |
+| Talent Acquisition - PCS Rules | Career Site, Smart Apply | TA PCS queries |
 | PCS Configuration Guide | Detailed PCS settings | PCS feature understanding |
 | Career Hub Configuration Guide | Career Hub config structure | TM config understanding |
-| AI/ML Recommendation Rules | Internal Mobility, Mentors | AI rule descriptions |
-| Security Rules | Loopback, Data Retention | Security rule descriptions |
-| Analytics Data Quality Rules | Employee/Position/Application quality | Analytics rule descriptions |
-| Integrations Rules | Sync lag, Webhooks, Field mappings | Integration rule descriptions |
-| Code Reference Guide | File paths for all rules | Code reference columns |
+| AI/ML Recommendation Rules | Internal Mobility, Mentors | AI rule queries |
+| Security Rules | Loopback, Data Retention | Security rule queries |
+| Analytics Data Quality Rules | Employee/Position/Application quality | Analytics rule queries |
+| Integrations Rules | Sync lag, Webhooks, Field mappings | Integration rule queries |
+| Code Reference Guide | File paths for all rules | Implementation lookups |
+| Stage Mapping Guide | Stage group configuration | Stage mapping issues |
+| Debugging Data Quality Issues | Troubleshooting steps | Data quality problems |
 
 ### Supplementary Documents
 
-| Document | Purpose |
-|----------|---------|
-| `RAG_KNOWLEDGE_BASE.md` | Delivery Excellence methodology, checkpoints |
-| `RULE_VERIFICATION_REPORT.md` | Rule verification status |
-| `TA_TM_PCS_product_health_rules_v2.tsv` | Latest rule descriptions (172 rules) |
+| Document | Purpose | When to Use |
+|----------|---------|-------------|
+| `RAG_KNOWLEDGE_BASE.md` | Delivery Excellence methodology, checkpoints | DE process questions |
+| `RULE_VERIFICATION_REPORT.md` | Rule verification status | Validating rule accuracy |
+| `TA_TM_PCS_product_health_rules_v2.tsv` | Latest rule descriptions (172 rules) | Quick rule lookup |
 
 ---
 
@@ -149,10 +265,10 @@ git remote -v
   - **TM Core** (44 rules): Career Hub, Courses, Data Health, Internal Mobility
   - **TM Leader Experience** (25 rules): Succession Planning, My Team, Projects
 
-**✅ Added AI Agent Instructions for Description Generation**
-- Reference to Technical Reference as primary knowledge source
-- Standard Purpose/Impact/To Fix format
-- Section mapping for finding rule details
+**✅ Enhanced AI Agent Instructions**
+- Technical Reference as primary knowledge source for ALL rule queries
+- Instructions for updating Technical Reference with new information
+- Expanded use cases beyond just descriptions
 
 ### **Jan 11-12, 2026** - 136 New Rules & Complete Documentation
 
@@ -520,7 +636,8 @@ When working on rules documentation:
 
 - [ ] **FIRST: Verify correct repository!** Run `git remote -v` - must show `mharrison-eightfold/instance_health_rules`
 - [ ] Read this file (`RULES_CONTEXT_LOADER.md`)
-- [ ] **Read `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md`** for rule details when generating descriptions
+- [ ] **For ANY rule query**: Read `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md` first
+- [ ] **When learning new info**: Update `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md`
 - [ ] Understand: This is **separate from app development** (app code goes to DE_heath_report_app repository)
 - [ ] Understand: 165 original rules + 136 new rules = 301 total documented rules
 - [ ] Know the rule categories: Config Health, Data Health, Operational Health
@@ -556,6 +673,7 @@ When working on rules documentation:
 5. **Code Traceability**: Every rule maps to implementation in Eightfold codebase
 6. **AI-Friendly**: Documentation structured for AI analysis and recommendations
 7. **Actionable**: Focus on "what to do" not just "what's wrong"
+8. **Living Documentation**: Update Technical Reference when new information is learned
 
 ---
 
