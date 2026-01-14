@@ -1,6 +1,6 @@
 # 📋 Rules Context Loader - Instance Health Rules Documentation
 
-**Quick Context for AI Agents** | Last Updated: Jan 13, 2026
+**Quick Context for AI Agents** | Last Updated: Jan 14, 2026
 
 ---
 
@@ -9,6 +9,83 @@
 This document covers the **Instance Health Rules documentation and enhancement work** - a parallel workstream focused on documenting, enhancing, and expanding the Instance Health rule set for the Eightfold platform.
 
 **This is SEPARATE from the main app development** (see [DE_heath_report_app repository](https://github.com/mharrison-eightfold/DE_heath_report_app) for app work).
+
+---
+
+## 🤖 **AI Agent: Using the Technical Reference for Rule Descriptions**
+
+When generating or enhancing rule descriptions, AI agents should use the **INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md** as the primary knowledge source.
+
+### Primary Knowledge Document
+
+**File**: `documentation/INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md` (3,971+ lines)
+
+This comprehensive document contains:
+- **Rule Logic**: Actual codebase implementation for each rule
+- **Configuration Schemas**: Exact config structure being checked
+- **Resolution Steps**: Step-by-step instructions to fix failures
+- **Config Locations**: Admin Console paths and config names
+- **Feature Mappings**: Which product features each rule validates
+
+### Description Format Standard
+
+All rule descriptions should follow this **Purpose / Impact / To Fix** format:
+
+```
+**Purpose:** [What the rule validates and why it exists]
+
+**Impact:** [What breaks or fails if this rule is not passing]
+
+**To Fix:** [Step-by-step instructions to resolve the failure]
+```
+
+### Example Description
+
+```
+**Purpose:** Validates that email configuration exists with valid send_from_domain and reply_to_domain settings for candidate communications.
+
+**Impact:** Without email configuration, recruiters cannot send emails to candidates from the platform.
+
+**To Fix:** Navigate to Admin Console → Provisioning → Email & SMS Configuration. Configure send_from_domain and reply_to_domain with verified domains.
+```
+
+### How to Use the Technical Reference
+
+1. **Find the Rule**: Search for the rule_id in the technical reference
+2. **Extract Key Details**:
+   - Feature Mapping (e.g., "Smart Scheduling", "Internal Mobility")
+   - Config Location (e.g., `scheduling_config`, `ijp_config`)
+   - Rule Logic (from codebase)
+   - Configuration Schema
+3. **Generate Description**:
+   - **Purpose**: What does this rule check and why?
+   - **Impact**: What happens if this fails?
+   - **To Fix**: What Admin Console path and specific steps?
+4. **Reference Resolution Steps**: Use the exact steps from the technical reference
+
+### Key Sections in Technical Reference
+
+| Section | Content | Use For |
+|---------|---------|---------|
+| Talent Management - Core Rules | TM data quality, Career Hub config | TM Core descriptions |
+| Talent Management - Leader Experience Rules | Succession, HRBP, Team View | TM Leader descriptions |
+| Talent Acquisition - Core Rules | Scheduling, Feedback, Pipeline | TA Core descriptions |
+| Talent Acquisition - PCS Rules | Career Site, Smart Apply | TA PCS descriptions |
+| PCS Configuration Guide | Detailed PCS settings | PCS feature understanding |
+| Career Hub Configuration Guide | Career Hub config structure | TM config understanding |
+| AI/ML Recommendation Rules | Internal Mobility, Mentors | AI rule descriptions |
+| Security Rules | Loopback, Data Retention | Security rule descriptions |
+| Analytics Data Quality Rules | Employee/Position/Application quality | Analytics rule descriptions |
+| Integrations Rules | Sync lag, Webhooks, Field mappings | Integration rule descriptions |
+| Code Reference Guide | File paths for all rules | Code reference columns |
+
+### Supplementary Documents
+
+| Document | Purpose |
+|----------|---------|
+| `RAG_KNOWLEDGE_BASE.md` | Delivery Excellence methodology, checkpoints |
+| `RULE_VERIFICATION_REPORT.md` | Rule verification status |
+| `TA_TM_PCS_product_health_rules_v2.tsv` | Latest rule descriptions (172 rules) |
 
 ---
 
@@ -58,7 +135,24 @@ git remote -v
 
 ---
 
-## 🆕 **Recent Updates (Jan 8-12, 2026)**
+## 🆕 **Recent Updates (Jan 8-14, 2026)**
+
+### **Jan 14, 2026** - Rule Description Enhancement & TSV Updates
+
+**✅ Created TA_TM_PCS_product_health_rules_v2.tsv** 📋
+- **172 rules** with enhanced descriptions
+- Columns: SKU, Product Area, Rule Name, Rule ID, Config Reference, Description, Cursor Generated Description, Current Feature ID, Current Feature Name, Action to be taken, Feature Alignment, Updated Description, Updates to rule logic
+- Rules organized by:
+  - **TA Core** (34 rules): Email, SMS, WhatsApp, Pipeline, Scheduling, Feedback
+  - **TA CRM Add-ons** (11 rules): Event Recruiting, Smart Campaigns, Talent Communities
+  - **TA PCS** (57 rules): Career Site, Smart Apply, Job Alerts, Branding
+  - **TM Core** (44 rules): Career Hub, Courses, Data Health, Internal Mobility
+  - **TM Leader Experience** (25 rules): Succession Planning, My Team, Projects
+
+**✅ Added AI Agent Instructions for Description Generation**
+- Reference to Technical Reference as primary knowledge source
+- Standard Purpose/Impact/To Fix format
+- Section mapping for finding rule details
 
 ### **Jan 11-12, 2026** - 136 New Rules & Complete Documentation
 
@@ -150,10 +244,9 @@ git remote -v
 - Verification status and findings
 
 **✅ TSV Files with Enhanced Descriptions**
-- `PCS_TM_TA_rules_with_cursor_descriptions.tsv` (166 lines)
-  - Original 165 rules with Cursor-generated descriptions
-- `instance_health_rules_input.tsv` (167 lines)
-  - Original rule input data
+- `TA_TM_PCS_product_health_rules_v2.tsv` (173 lines) - Latest consolidated rules
+- `PCS_TM_TA_rules_with_cursor_descriptions.tsv` (166 lines) - Original 165 rules enhanced
+- `instance_health_rules_input.tsv` (167 lines) - Original rule input data
 
 ---
 
@@ -187,10 +280,11 @@ instance_health_rules/                                  # ← THIS REPOSITORY
 ├── documentation/
 │   ├── RULES_CONTEXT_LOADER.md                         # ← THIS FILE (start here!)
 │   │
-│   ├── INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md    # ← 3,971 lines - Comprehensive tech reference
+│   ├── INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md    # ← 3,971 lines - PRIMARY KNOWLEDGE SOURCE
 │   ├── RAG_KNOWLEDGE_BASE.md                           # ← 415 lines - AI domain knowledge
 │   ├── RULE_VERIFICATION_REPORT.md                     # ← 183 lines - Rule verification
 │   │
+│   ├── TA_TM_PCS_product_health_rules_v2.tsv           # ← 173 lines - Latest consolidated rules
 │   ├── new_rules_136_input.tsv                         # ← 136 new rules (raw)
 │   ├── new_rules_136_with_enhanced_descriptions.tsv    # ← 136 new rules (enhanced)
 │   ├── PCS_TM_TA_rules_with_cursor_descriptions.tsv    # ← 165 original rules (enhanced)
@@ -413,9 +507,10 @@ Integrations are the data pipeline. If ATS/HRIS sync breaks or lags, the platfor
 | `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md` | 3,971 | Complete technical reference for all rules |
 | `RAG_KNOWLEDGE_BASE.md` | 415 | AI domain knowledge for analysis |
 | `RULE_VERIFICATION_REPORT.md` | 183 | Rule verification documentation |
+| `TA_TM_PCS_product_health_rules_v2.tsv` | 173 | Latest consolidated rule descriptions |
 | `new_rules_136_with_enhanced_descriptions.tsv` | 819 | 136 new rules with descriptions |
 | `PCS_TM_TA_rules_with_cursor_descriptions.tsv` | 166 | 165 original rules enhanced |
-| **TOTAL** | **5,554** | **Complete rule documentation set** |
+| **TOTAL** | **5,727** | **Complete rule documentation set** |
 
 ---
 
@@ -425,6 +520,7 @@ When working on rules documentation:
 
 - [ ] **FIRST: Verify correct repository!** Run `git remote -v` - must show `mharrison-eightfold/instance_health_rules`
 - [ ] Read this file (`RULES_CONTEXT_LOADER.md`)
+- [ ] **Read `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md`** for rule details when generating descriptions
 - [ ] Understand: This is **separate from app development** (app code goes to DE_heath_report_app repository)
 - [ ] Understand: 165 original rules + 136 new rules = 301 total documented rules
 - [ ] Know the rule categories: Config Health, Data Health, Operational Health
