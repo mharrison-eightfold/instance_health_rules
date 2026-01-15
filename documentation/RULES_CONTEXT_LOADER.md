@@ -1,6 +1,6 @@
 # 📋 Rules Context Loader - Instance Health Rules Documentation
 
-**Quick Context for AI Agents** | Last Updated: Jan 14, 2026
+**Quick Context for AI Agents** | Last Updated: Jan 15, 2026
 
 ---
 
@@ -9,6 +9,337 @@
 This document covers the **Instance Health Rules documentation and enhancement work** - a parallel workstream focused on documenting, enhancing, and expanding the Instance Health rule set for the Eightfold platform.
 
 **This is SEPARATE from the main app development** (see [DE_heath_report_app repository](https://github.com/mharrison-eightfold/DE_heath_report_app) for app work).
+
+---
+
+## 🔬 **AI Agent: Rule Evaluation Methodology**
+
+### When to Use This Methodology
+
+Use this process when the user provides:
+- A new set of rules to evaluate
+- Ticket data for evidence mapping
+- Request to improve existing rules
+- Request to suggest new rules
+- Request to prioritize rules
+
+### The Complete Rule Evaluation Process
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    RULE EVALUATION PROCESS                       │
+├─────────────────────────────────────────────────────────────────┤
+│  1. LOAD CONTEXT → Rules Context Loader + Technical Reference   │
+│  2. ANALYZE TICKETS → Review JIRA/ticket data, identify patterns│
+│  3. MAP EVIDENCE → Link tickets to existing rules               │
+│  4. PRIORITIZE → Rate all rules P0/P1/P2/P3/Remove              │
+│  5. GAP ANALYSIS → Find missing rules from ticket patterns      │
+│  6. PROPOSE NEW → Create new rules with evidence                │
+│  7. DOCUMENT → Executive summary, TSV files, MD knowledge docs  │
+│  8. VALIDATE → Optional: Live JQL queries against projects      │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Step 1: Load Context
+
+**Required Documents:**
+1. `RULES_CONTEXT_LOADER.md` (this file)
+2. `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md` (primary knowledge source)
+
+**Actions:**
+- Understand rule structure (SKU, Product Area, Rule ID, Config Reference, Description)
+- Know the rule categories (Config Health, Data Health, Operational Health)
+- Know the product areas (TA Core, TA PCS, TM Core, TM Leader, AI/TIP, Security, Analytics)
+
+---
+
+### Step 2: Analyze Ticket Data
+
+**Supported Formats:**
+- TSV files (preferred)
+- CSV files
+- Google Sheets (export to TSV first)
+
+**Key Columns to Analyze:**
+
+| Column | Purpose |
+|--------|---------|
+| Issue Key | JIRA ticket ID (e.g., IMPL-199330) |
+| Issue Type | Bug, Partner Support, Action Item |
+| RCA Reason | Root Cause Analysis category |
+| Product | Which product area affected |
+| Implementing Team | Which team handles it |
+| Summary | Brief description |
+| Labels | Tags for categorization |
+| Customer/Project | Which implementation |
+
+**Analysis Commands:**
+```bash
+# Count total tickets
+wc -l < tickets.tsv
+
+# Get column headers
+head -1 tickets.tsv | tr '\t' '\n' | nl
+
+# RCA distribution
+cut -f[RCA_COLUMN] tickets.tsv | sort | uniq -c | sort -rn | head -20
+
+# Product area distribution
+cut -f[PRODUCT_COLUMN] tickets.tsv | sort | uniq -c | sort -rn | head -20
+
+# Search for specific issues
+grep -i "configuration" tickets.tsv | wc -l
+grep -i "email" tickets.tsv | head -10
+```
+
+**Key Metrics to Extract:**
+- Total ticket count
+- Date range
+- Issue type distribution (Bug vs Support vs Action Item)
+- RCA reason distribution (especially "Configuration Issue")
+- Product area impact
+- Implementing team distribution
+- Common labels
+
+---
+
+### Step 3: Map Evidence to Existing Rules
+
+**Evidence Format:**
+```
+Evidence column should contain only JIRA ticket keys, e.g.:
+IMPL-199330, IMPL-199342, IMPL-199374
+```
+
+**Search Strategy:**
+
+For each rule category, search tickets using relevant keywords:
+
+| Rule Category | Search Keywords |
+|---------------|-----------------|
+| Email/SMS | email, sms, communication, send, notification |
+| Scheduling | scheduling, calendar, availability, slots, interview |
+| Career Hub | career hub, ijp, internal mobility, job bands |
+| PCS/Career Site | career site, pcs, apply, application, branding |
+| Integration/Sync | sync, integration, workday, webhook, hris |
+| Calibration | calibration, calibrate, position, match |
+| Permissions | permission, access, role, visibility |
+| Branding | logo, color, theme, brand, css |
+| Data Quality | quality, missing, incomplete, threshold |
+
+**Mapping Process:**
+1. Search tickets for each rule's keywords
+2. Read ticket summaries to confirm relevance
+3. Add JIRA keys to Evidence column
+4. Track rules without evidence for Step 4
+
+---
+
+### Step 4: Prioritize Rules
+
+**Priority Rating Scale:**
+
+| Priority | Definition | Go-Live Blocker? | Action |
+|----------|------------|------------------|--------|
+| **P0** | Critical - Blocking functionality or security issues | Yes | Must fix before go-live |
+| **P1** | High - Core functionality significantly impacted | Usually | Fix before go-live if possible |
+| **P2** | Medium - Important but workarounds exist | No | Fix post go-live |
+| **P3** | Low - Nice to have / edge cases / minor impact | No | Backlog |
+| **Remove** | No value / causes false positives / deprecated | No | Remove from rule set |
+
+**P0 Examples:**
+- Loopback email not configured (emails fail)
+- Career site completely inaccessible
+- SSO broken
+- Data sync completely failing
+
+**P1 Examples:**
+- Email templates misconfigured (some emails work)
+- Stage mapping incomplete (funnel metrics wrong)
+- Scheduling config missing slots (limited availability)
+
+**P2 Examples:**
+- Branding colors not set (uses defaults)
+- Optional features not configured
+- Data quality below threshold but above minimum
+
+**P3 Examples:**
+- Analytics dashboard tweaks
+- Edge case configurations
+- Non-customer-facing settings
+
+**Remove Examples:**
+- Static text that has no functional impact
+- Personal preference metrics
+- Deprecated features no longer used
+
+**Decision Framework:**
+```
+Is it blocking core functionality? → P0
+Is it impacting user experience significantly? → P1
+Is it important but has workarounds? → P2
+Is it nice to have but optional? → P3
+Does it cause more noise than value? → Remove
+```
+
+---
+
+### Step 5: Gap Analysis for New Rules
+
+**Identify Patterns NOT Covered by Existing Rules:**
+
+1. **High-frequency ticket categories** without corresponding rules
+2. **Recurring configuration issues** from ticket RCA data
+3. **New product features** that need configuration validation
+4. **Integration points** that commonly fail
+
+**Gap Analysis Questions:**
+- What configuration issues appear repeatedly in tickets?
+- What breaks most often during implementations?
+- What would catch issues earlier if validated?
+- What customer-facing functionality lacks a rule?
+
+---
+
+### Step 6: Propose New Rules
+
+**New Rule Format:**
+
+```tsv
+SKU	Product Area	Rule Name	Rule ID	Config Reference	Cursor Generated Description	New Feature Alignment	Evidence	Status
+[SKU]	[Area]	[Name]	[rule_id]	[config_path]	[Purpose/Impact/To Fix]	[Feature]	[JIRA Keys]	NEW
+```
+
+**Description Format:**
+```
+**Purpose:** [What the rule validates and why]
+
+**Impact:** [What breaks if this rule fails]
+
+**To Fix:** [Step-by-step resolution]
+```
+
+**New Rule Priority Assignment:**
+- P0: Would prevent critical failures
+- P1: Would catch significant issues early
+- P2: Would improve configuration quality
+- P3: Would catch edge cases
+
+**Example New Rule:**
+```
+SKU: Talent Acquisition Core
+Product Area: Communications
+Rule Name: A2P 10DLC SMS Registration
+Rule ID: sms_a2p_10dlc_registered
+Config Reference: sms_config → a2p_registration
+Description: **Purpose:** Validates SMS sender is registered for A2P 10DLC compliance...
+Evidence: IMPL-199330, IMPL-199342
+Status: NEW
+```
+
+---
+
+### Step 7: Document Findings
+
+**Create These Files:**
+
+| File | Purpose | Format |
+|------|---------|--------|
+| `TICKET_DATA_SCOPE_SUMMARY.md` | Summary of ticket data analyzed | Markdown |
+| `INSTANCE_HEALTH_RULES_TICKET_ANALYSIS.md` | Detailed findings | Markdown |
+| `All rules with Priority.tsv` | Rules with Priority column added | TSV |
+| `SUGGESTED_NEW_RULES.tsv` | New proposed rules | TSV |
+| `EXECUTIVE_SUMMARY_RULES_EVALUATION.md` | Summary for stakeholders | Markdown |
+
+**Ticket Data Scope Summary Should Include:**
+- Data source
+- Total tickets
+- Date range
+- Issue type distribution
+- Status distribution
+- RCA reason distribution
+- Product areas covered
+- Implementing teams
+- Key observations
+
+**Executive Summary Should Include:**
+- Overview of analysis goals
+- Key findings from ticket analysis
+- Rule evaluation methodology
+- Results (priority distribution)
+- New rules proposed
+- Recommendations
+
+---
+
+### Step 8: Validate (Optional)
+
+**Use Jira MCP for Live Queries:**
+```
+mcp_Atlassian-MCP-Server_searchJiraIssuesUsingJql
+```
+
+**Example JQL Queries:**
+```jql
+# Bugs for specific project
+project = "Customer Implementations" AND issuetype = bug AND "Project Name" = "PROJECT_NAME"
+
+# Configuration issues
+project = IMPL AND "RCA Reason" = "Configuration Issue - Implementation"
+
+# Recent tickets for product
+project = IMPL AND created >= 2024-01-01 AND product = "TA"
+```
+
+**Validate Findings:**
+- Confirm ticket patterns with live data
+- Check if issues are still occurring
+- Identify additional evidence for rules
+
+---
+
+## 📊 **Reference: Evaluation Metrics from Jan 2026 Exercise**
+
+### Ticket Analysis Summary
+
+| Metric | Value |
+|--------|-------|
+| Total Tickets Analyzed | 3,019 |
+| Issue Types | 64% Bugs, 36% Partner Support |
+| Configuration Issues | 352 tickets (11.7%) |
+| Health Check Exemptions | 32 tickets (1.1%) |
+
+### RCA Distribution (Top 5)
+
+| RCA Category | Tickets | % |
+|--------------|---------|---|
+| Product Bug | 597 | 19.8% |
+| ENG Support Required | 551 | 18.3% |
+| Configuration Issue - Implementation | 352 | 11.7% |
+| New Implementation Request | 256 | 8.5% |
+| Gap in Product Understanding | 203 | 6.7% |
+
+### Rule Evaluation Results
+
+| Priority | Count | % |
+|----------|-------|---|
+| P0 | 12 | 3.9% |
+| P1 | 62 | 20.1% |
+| P2 | 186 | 60.4% |
+| P3 | 46 | 14.9% |
+| Remove | 2 | 0.6% |
+
+### New Rules Proposed
+
+| Priority | Count |
+|----------|-------|
+| P0 (Critical) | 3 |
+| P1 (High) | 8 |
+| P2 (Medium) | 11 |
+| P3 (Low) | 3 |
+| **Total** | **25** |
 
 ---
 
@@ -29,7 +360,7 @@ The environment does NOT have git credentials configured:
 The **MCP GitHub tool** has its own OAuth authentication and should be used for ALL GitHub operations:
 
 | Operation | MCP Tool to Use | Example |
-|-----------|-----------------|---------|
+|-----------|-----------------|---------| 
 | Push files | `mcp_MCP-GITHUB_push_files` | Push multiple files in one commit |
 | Update file | `mcp_MCP-GITHUB_create_or_update_file` | Update existing file with SHA |
 | Get file | `mcp_MCP-GITHUB_get_file_contents` | Read file and get SHA |
@@ -235,7 +566,7 @@ All rule descriptions should follow this **Purpose / Impact / To Fix** format:
 ### Key Sections in Technical Reference
 
 | Section | Content | Use For |
-|---------|---------|---------|
+|---------|---------|---------| 
 | Talent Management - Core Rules | TM data quality, Career Hub config | TM Core queries |
 | Talent Management - Leader Experience Rules | Succession, HRBP, Team View | TM Leader queries |
 | Talent Acquisition - Core Rules | Scheduling, Feedback, Pipeline | TA Core queries |
@@ -311,7 +642,24 @@ mcp_MCP-GITHUB_push_files or mcp_MCP-GITHUB_create_or_update_file
 
 ---
 
-## 🆕 **Recent Updates (Jan 8-14, 2026)**
+## 🆕 **Recent Updates (Jan 8-15, 2026)**
+
+### **Jan 15, 2026** - Rule Evaluation Methodology Added
+
+**✅ Added Complete Rule Evaluation Methodology** 📋
+- 8-step process for evaluating rules with ticket data
+- Priority rating scale (P0/P1/P2/P3/Remove) with definitions
+- Evidence mapping process
+- Gap analysis for new rules
+- Documentation requirements
+- Reference metrics from Jan 2026 exercise
+
+**Exercise Results:**
+- 308 rules evaluated
+- 64 rules with ticket evidence
+- 292 rules prioritized based on product/code analysis
+- 25 new rules proposed
+- 2 rules marked for removal
 
 ### **Jan 14, 2026** - Rule Description Enhancement & Config Reference Updates
 
@@ -393,11 +741,13 @@ When working on rules documentation:
 - [ ] **Verify correct repository!** Check `mharrison-eightfold/instance_health_rules`
 - [ ] Read this file (`RULES_CONTEXT_LOADER.md`)
 - [ ] **For ANY rule query**: Read `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md` first
+- [ ] **For rule evaluation**: Follow the 8-step Rule Evaluation Methodology
 - [ ] **When learning new info**: Update `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md`
 - [ ] Understand: This is **separate from app development** (app code goes to DE_heath_report_app repository)
 - [ ] Understand: 165 original rules + 136 new rules = 301 total documented rules
 - [ ] Know the rule categories: Config Health, Data Health, Operational Health
 - [ ] Know the 6 checkpoints and their purposes
+- [ ] Know the priority scale: P0 (critical) → P3 (low) → Remove
 - [ ] Know where to find technical details: `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md`
 - [ ] Know where to find remediation guidance: `RAG_KNOWLEDGE_BASE.md`
 - [ ] Understand: Each rule has Purpose, Impact, To Fix sections
@@ -412,11 +762,13 @@ When working on rules documentation:
 2. **Rule Criterion**: Only add rules that are **absolutely required** for functionality (not "nice to have")
 3. **Ownership**: Product Delivery Team and Partners responsible for 100% config health pass rate
 4. **Documentation First**: Every rule must have clear Purpose, Impact, and To Fix guidance
-5. **Confluence Integration**: Link to official documentation whenever possible
-6. **Code Traceability**: Every rule maps to implementation in Eightfold codebase
-7. **AI-Friendly**: Documentation structured for AI analysis and recommendations
-8. **Actionable**: Focus on "what to do" not just "what's wrong"
-9. **Living Documentation**: Update Technical Reference when new information is learned
+5. **Evidence-Based**: Link rules to supporting tickets/issues when possible
+6. **Priority-Driven**: Assign P0-P3 ratings based on go-live impact
+7. **Confluence Integration**: Link to official documentation whenever possible
+8. **Code Traceability**: Every rule maps to implementation in Eightfold codebase
+9. **AI-Friendly**: Documentation structured for AI analysis and recommendations
+10. **Actionable**: Focus on "what to do" not just "what's wrong"
+11. **Living Documentation**: Update Technical Reference when new information is learned
 
 ---
 
