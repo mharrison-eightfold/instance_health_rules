@@ -34,7 +34,7 @@ Use this process when the user provides:
 │  3. MAP EVIDENCE → Link tickets to existing rules               │
 │  4. PRIORITIZE → Rate all rules P0/P1/P2/P3/Remove              │
 │  5. GAP ANALYSIS → Find missing rules from ticket patterns      │
-│  6. PROPOSE NEW → Create new rules with evidence                │
+│  6. PROPOSE NEW → Create new rules with evidence (sparingly!)   │
 │  7. DOCUMENT → Executive summary, TSV files, MD knowledge docs  │
 │  8. VALIDATE → Optional: Live JQL queries against projects      │
 └─────────────────────────────────────────────────────────────────┘
@@ -188,6 +188,15 @@ Does it cause more noise than value? → Remove
 
 ### Step 5: Gap Analysis for New Rules
 
+> ⚠️ **CRITICAL PHILOSOPHY: The goal is NOT more rules, but the RIGHT rules.**
+> 
+> Creating new rules is NOT preferable to having no new rules. Every new rule adds:
+> - Maintenance overhead
+> - Potential for false positives
+> - Additional noise for implementation teams
+> 
+> Only propose a new rule if there is **clear, repeated evidence** that the rule would prevent real issues.
+
 **Identify Patterns NOT Covered by Existing Rules:**
 
 1. **High-frequency ticket categories** without corresponding rules
@@ -201,9 +210,79 @@ Does it cause more noise than value? → Remove
 - What would catch issues earlier if validated?
 - What customer-facing functionality lacks a rule?
 
+#### Handling Customer-Specific Requirements
+
+**⚠️ IMPORTANT: Distinguish Between Default vs Customer-Specific Issues**
+
+When analyzing tickets, you must determine if the issue was caused by:
+
+| Issue Type | Description | Rule Approach |
+|------------|-------------|---------------|
+| **Default Configuration Miss** | The platform default was wrong or missing | ✅ Good candidate for a rule |
+| **Customer-Specific Requirement** | Customer wanted something different from default | ⚠️ Requires special handling |
+| **Implementation Error** | Implementer made a mistake | ✅ Good candidate for a rule |
+| **Product Bug** | Platform code issue | ❌ Not a config rule - engineering fix |
+
+**For Customer-Specific Requirements:**
+
+1. **Can the rule check for non-default values?**
+   - If yes: Create a rule that validates non-default values are properly configured
+   - Example: "If `custom_branding = true`, then `brand_colors` must be set"
+
+2. **Does the rule have access to customer requirements?**
+   - Usually NO - rules only see configuration, not the customer's SOW or requirements doc
+   - If the rule cannot validate accuracy against customer requirements, it may not be possible to create
+
+3. **Types of customer-specific rules that CAN work:**
+   ```
+   ✅ "If feature X is enabled, config Y must be set" (conditional checks)
+   ✅ "Non-empty value required when override is enabled"
+   ✅ "Custom field mappings must exist if custom sync is enabled"
+   ✅ "If using non-default template, template must be valid"
+   ```
+
+4. **Types that CANNOT work:**
+   ```
+   ❌ "Customer's specific logo matches their brand guidelines"
+   ❌ "Email text matches customer's requested wording"
+   ❌ "Workflow stages match customer's hiring process"
+   ❌ "Custom field values are correct per SOW"
+   ```
+
+**Decision Tree for Customer-Specific Issues:**
+
+```
+Was the issue due to customer-specific requirements?
+│
+├─ NO → Normal rule evaluation (proceed to Step 6)
+│
+└─ YES → Can the rule check config without knowing the requirement?
+         │
+         ├─ YES (e.g., "non-default value must be set") 
+         │       → Create conditional rule
+         │
+         └─ NO (e.g., "must match SOW specifications")
+                 → NOT suitable for automated rule
+                 → Document as "requires manual review"
+                 → Consider adding to implementation checklist instead
+```
+
 ---
 
 ### Step 6: Propose New Rules
+
+> ⚠️ **REMINDER: Less is more. Only propose rules with strong justification.**
+
+**Before Proposing ANY New Rule, Ask:**
+
+1. **Is there repeated evidence?** (Multiple tickets, not just one)
+2. **Would this rule prevent real issues?** (Not just theoretical)
+3. **Can the rule actually validate correctness?** (Has access to needed data)
+4. **Is it a default config issue or customer-specific?** (See Step 5)
+5. **Would this rule cause false positives?** (Noise vs value)
+6. **Does an existing rule already cover this?** (Avoid duplicates)
+
+**If the answer to any of these is "No" or "Uncertain" → Do NOT propose the rule**
 
 **New Rule Format:**
 
@@ -227,6 +306,16 @@ SKU	Product Area	Rule Name	Rule ID	Config Reference	Cursor Generated Description
 - P2: Would improve configuration quality
 - P3: Would catch edge cases
 
+**When to Mark as "NOT RECOMMENDED" Instead of Creating Rule:**
+
+| Scenario | Action |
+|----------|--------|
+| Issue is customer-specific and rule can't validate accuracy | Mark as "Manual Review Required" |
+| Only 1-2 tickets for this issue | Insufficient evidence - don't create rule |
+| Rule would require access to external requirements | Mark as "Cannot Automate" |
+| High risk of false positives | Mark as "Risk Outweighs Benefit" |
+| Issue is better handled by training | Mark as "Process/Training Issue" |
+
 **Example New Rule:**
 ```
 SKU: Talent Acquisition Core
@@ -237,6 +326,18 @@ Config Reference: sms_config → a2p_registration
 Description: **Purpose:** Validates SMS sender is registered for A2P 10DLC compliance...
 Evidence: IMPL-199330, IMPL-199342
 Status: NEW
+```
+
+**Example "NOT RECOMMENDED" Entry:**
+```
+SKU: Talent Acquisition Core
+Product Area: Branding
+Rule Name: Custom Logo Matches Brand Guidelines
+Rule ID: N/A
+Config Reference: branding_config → logo
+Justification: Cannot automate - rule has no access to customer's brand guidelines. 
+               Logo presence can be validated, but accuracy requires manual review.
+Status: NOT RECOMMENDED - Manual Review Required
 ```
 
 ---
@@ -270,6 +371,7 @@ Status: NEW
 - Rule evaluation methodology
 - Results (priority distribution)
 - New rules proposed
+- **Issues identified as NOT suitable for rules** (customer-specific, manual review needed)
 - Recommendations
 
 ---
@@ -654,6 +756,13 @@ mcp_MCP-GITHUB_push_files or mcp_MCP-GITHUB_create_or_update_file
 - Documentation requirements
 - Reference metrics from Jan 2026 exercise
 
+**✅ Added New Rule Creation Philosophy** ⚠️
+- "The goal is NOT more rules, but the RIGHT rules"
+- Guidance on distinguishing default vs customer-specific issues
+- Decision tree for customer-specific requirements
+- Criteria for when NOT to create a rule
+- "NOT RECOMMENDED" status for issues that can't be automated
+
 **Exercise Results:**
 - 308 rules evaluated
 - 64 rules with ticket evidence
@@ -742,12 +851,14 @@ When working on rules documentation:
 - [ ] Read this file (`RULES_CONTEXT_LOADER.md`)
 - [ ] **For ANY rule query**: Read `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md` first
 - [ ] **For rule evaluation**: Follow the 8-step Rule Evaluation Methodology
+- [ ] **For new rules**: Remember - the goal is RIGHT rules, not MORE rules
 - [ ] **When learning new info**: Update `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md`
 - [ ] Understand: This is **separate from app development** (app code goes to DE_heath_report_app repository)
 - [ ] Understand: 165 original rules + 136 new rules = 301 total documented rules
 - [ ] Know the rule categories: Config Health, Data Health, Operational Health
 - [ ] Know the 6 checkpoints and their purposes
 - [ ] Know the priority scale: P0 (critical) → P3 (low) → Remove
+- [ ] Know when NOT to create a rule: customer-specific, manual review needed, insufficient evidence
 - [ ] Know where to find technical details: `INSTANCE_HEALTH_RULES_TECHNICAL_REFERENCE.md`
 - [ ] Know where to find remediation guidance: `RAG_KNOWLEDGE_BASE.md`
 - [ ] Understand: Each rule has Purpose, Impact, To Fix sections
@@ -759,16 +870,18 @@ When working on rules documentation:
 ## 💡 **Key Principles**
 
 1. **Use MCP for GitHub**: Git CLI doesn't have authentication - always use MCP GitHub tools
-2. **Rule Criterion**: Only add rules that are **absolutely required** for functionality (not "nice to have")
-3. **Ownership**: Product Delivery Team and Partners responsible for 100% config health pass rate
-4. **Documentation First**: Every rule must have clear Purpose, Impact, and To Fix guidance
-5. **Evidence-Based**: Link rules to supporting tickets/issues when possible
-6. **Priority-Driven**: Assign P0-P3 ratings based on go-live impact
-7. **Confluence Integration**: Link to official documentation whenever possible
-8. **Code Traceability**: Every rule maps to implementation in Eightfold codebase
-9. **AI-Friendly**: Documentation structured for AI analysis and recommendations
-10. **Actionable**: Focus on "what to do" not just "what's wrong"
-11. **Living Documentation**: Update Technical Reference when new information is learned
+2. **Less is More**: The goal is the RIGHT rules, not MORE rules - avoid rule proliferation
+3. **Rule Criterion**: Only add rules that are **absolutely required** for functionality (not "nice to have")
+4. **Customer-Specific Awareness**: Distinguish between default config issues (can automate) vs customer-specific requirements (often can't automate)
+5. **Ownership**: Product Delivery Team and Partners responsible for 100% config health pass rate
+6. **Documentation First**: Every rule must have clear Purpose, Impact, and To Fix guidance
+7. **Evidence-Based**: Link rules to supporting tickets/issues when possible
+8. **Priority-Driven**: Assign P0-P3 ratings based on go-live impact
+9. **Confluence Integration**: Link to official documentation whenever possible
+10. **Code Traceability**: Every rule maps to implementation in Eightfold codebase
+11. **AI-Friendly**: Documentation structured for AI analysis and recommendations
+12. **Actionable**: Focus on "what to do" not just "what's wrong"
+13. **Living Documentation**: Update Technical Reference when new information is learned
 
 ---
 
